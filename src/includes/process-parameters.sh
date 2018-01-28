@@ -42,6 +42,7 @@
 
 domain="";
 mode="add";
+root_dir="/var/www/html";
 enable_ssl="no";
 verbose_mode="no";
 display_help="no";
@@ -74,6 +75,8 @@ while :
         break;
     elif [ $param_key == "-d" ] || [ $param_key == "--domain" ]; then
         domain=$param_value;
+    elif [ $param_key == "-rd" ] || [ $param_key == "--root-dir" ]; then
+        root_dir=$param_value;
     elif [ $param_key == "-a" ] || [ $param_key == "--add" ]; then
         mode="add";
     elif [ $param_key == "-r" ] || [ $param_key == "--remove" ]; then

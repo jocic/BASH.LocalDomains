@@ -40,6 +40,7 @@
 # CORE VARIABLES #
 ##################
 
+source_dir="$(cd "$( dirname "${BASH_SOURCE[0]}")" && pwd)"
 version="1.0.0";
 
 ###################
@@ -52,15 +53,15 @@ temp=""
 # LOGIC #
 #########
 
-source "./includes/process-parameters.sh";
+source "$source_dir/includes/process-parameters.sh";
 
 if [ $display_help == "yes" ]; then
     
-    source "./includes/show-help.sh";
+    source "$source_dir/includes/show-help.sh";
     
 elif [ $display_version == "yes" ]; then
     
-    source "./includes/show-version.sh";
+    source "$source_dir/includes/show-version.sh";
     
 else
     
@@ -94,7 +95,7 @@ else
     # STEP 3 - ASK FOR CONFIRMATION #
     #################################
     
-    source "./includes/show-parameters.sh";
+    source "$source_dir/includes/show-parameters.sh";
     
     echo -e "\nPlease review parameters above before proceeding.\n";
     
@@ -110,11 +111,11 @@ else
         
         if [ $mode == "add" ]; then
             
-            echo -e "Adding...";
+            source "$source_dir/includes/add-domain.sh";
             
         else
             
-            echo -e "Removing...";
+            source "$source_dir/includes/remove-domain.sh";
             
         fi
         

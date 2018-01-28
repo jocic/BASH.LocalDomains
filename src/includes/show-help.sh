@@ -49,8 +49,9 @@ echo -e "Adds a local domain and restarts apache.\n";
 ###################################
 
 echo "  -d {domain}, --domain {domain}               Domain that needs to be added or removed.";
-echo "  -a                                           Select add mode.";
-echo "  -r                                           Select remove mode.";
+echo "  -rd {root_dir}, --root-dir {root_dir}        Root directory of a domain.";
+echo "  -a, --add                                    Select add mode.";
+echo "  -r, --remove                                 Select remove mode.";
 echo "  -v, --verbose                                Explain what is being done.";
 echo "  -h, --help                                   Display this help and exit.";
 echo "      --version                                Output version information and exit.";

@@ -40,8 +40,4 @@
 # LOGIC #
 #########
 
-echo "Domain:       $domain";
-echo "Root Dir:     $root_dir";
-echo "Mode:         $mode";
-echo "Enable SSL:   $enable_ssl";
-echo "Verbose Mode: $verbose_mode";
+echo -e "Removing...";

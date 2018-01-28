@@ -40,7 +40,7 @@
 # LOGIC #
 #########
 
-echo -e "local-domains $version";
+echo -e "Local Domains $version";
 echo -e "Copyright (C) 2018 Djordje Jocic";
 echo -e "License MIT <http://opensource.org/licenses/MIT>";
 
