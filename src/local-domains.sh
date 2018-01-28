@@ -65,7 +65,19 @@ elif [ $display_version == "yes" ]; then
 else
     
     ##############################
-    # STEP 1 - CHECK DOMAIN NAME #
+    # STEP 1 - CHECK PRICILEDGES #
+    ##############################
+    
+    if [ "$(id -u)" != "0" ]; then
+        
+        echo "Error: Local Domains must be ran with root priviledges.";
+        
+        exit;
+        
+    fi
+    
+    ##############################
+    # STEP 2 - CHECK DOMAIN NAME #
     ##############################
     
     temp=$(echo $domain | grep -P '(?=^.{5,254}$)(^(?:(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)');
@@ -79,24 +91,32 @@ else
     fi
     
     #################################
-    # STEP 2 - ASK FOR CONFIRMATION #
+    # STEP 3 - ASK FOR CONFIRMATION #
     #################################
     
     source "./includes/show-parameters.sh";
     
     echo -e "\nPlease review parameters above before proceeding.\n";
     
-    read -p "Continue? (y/n)" -n 1 -r;
+    read -p "Continue? (y/n) - " -n 1 temp;
     
     ###########################
-    # STEP 2 - PROCESS DOMAIN #
+    # STEP 4 - PROCESS DOMAIN #
     ###########################
     
     echo -e "\n";
     
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if [[ $temp =~ ^[Yy]$ ]]; then
         
-        echo -e "Adding...";
+        if [ $mode == "add" ]; then
+            
+            echo -e "Adding...";
+            
+        else
+            
+            echo -e "Removing...";
+            
+        fi
         
     else
         
