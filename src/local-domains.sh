@@ -84,6 +84,26 @@ else
     
     source "./includes/show-parameters.sh";
     
+    echo -e "\nPlease review parameters above before proceeding.\n";
     
+    read -p "Continue? (y/n)" -n 1 -r;
+    
+    ###########################
+    # STEP 2 - PROCESS DOMAIN #
+    ###########################
+    
+    echo -e "\n";
+    
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        
+        echo -e "Adding...";
+        
+    else
+        
+        echo -e "Exiting...";
+        
+        exit;
+        
+    fi
     
 fi
