@@ -143,7 +143,7 @@ fi
 hosts_data=$(cat "/etc/hosts");
 hosts_line="127.0.1.1	$domain";
 
-hosts_data="${hosts_data//$hosts_line/}"; # Prevent Duplicates
+hosts_data="${hosts_data//$hosts_line/}"; # Prevent Duplicate Lines
 
 echo "$hosts_data$hosts_line" > "/etc/hosts";
 

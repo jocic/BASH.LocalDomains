@@ -36,8 +36,75 @@
 # SOFTWARE.                                      #
 ##################################################
 
-#########
-# LOGIC #
-#########
+##################
+# CORE VARIABLES #
+##################
 
-echo -e "Removing...";
+hosts_data="";
+config_filename="";
+
+#####################
+# PATTERN VARIABLES #
+#####################
+
+config_filename_pattern="[^a-zA-Z0-9]";
+
+###################
+# OTHER VARIABLES #
+###################
+
+hosts_line="";
+
+#####################################
+# STEP 1 - GENERATE CONFIG FILENAME #
+#####################################
+
+if [ $verbose_mode == "yes" ]; then
+    
+    echo -e "1. Generating apache configuration filename...";
+    
+fi
+
+config_filename="${domain//$config_filename_pattern/_}.conf";
+
+##############################
+# STEP 2 - SAVE CONFIG FILES #
+##############################
+
+if [ $verbose_mode == "yes" ]; then
+    
+    echo -e "2. Removing apache configuration...";
+    
+fi
+
+rm "/etc/apache2/sites-available/$config_filename";
+rm "/etc/apache2/sites-enabled/$config_filename";
+
+#########################
+# STEP 3 - ADD HOSTNAME #
+#########################
+
+if [ $verbose_mode == "yes" ]; then
+    
+    echo -e "3. Removing domain from the \"/etc/hosts\" list...";
+    
+fi
+
+hosts_data=$(cat "/etc/hosts");
+hosts_line="127.0.1.1	$domain";
+
+hosts_data="${hosts_data//$hosts_line/}"; # Remove Desired Line
+
+echo "$hosts_data" > "/etc/hosts";
+
+###########################
+# STEP 4 - RESTART APACHE #
+###########################
+
+if [ $verbose_mode == "yes" ]; then
+    
+    echo -e "4. Restarting apache...";
+    
+fi
+
+service apache2 restart;
