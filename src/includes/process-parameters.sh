@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.0.0                                           #
+# Script Version: 1.0.1                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -37,6 +37,7 @@
 domain="";
 mode="add";
 root_dir="/var/www/html";
+server_admin="webmaster@localhost";
 enable_ssl="no";
 verbose_mode="no";
 display_help="no";
@@ -71,6 +72,8 @@ while :
         domain=$param_value;
     elif [ $param_key == "-rd" ] || [ $param_key == "--root-dir" ]; then
         root_dir=$param_value;
+    elif [ $param_key == "-sa" ] || [ $param_key == "--server-admin" ]; then
+        server_admin=$param_value;
     elif [ $param_key == "-a" ] || [ $param_key == "--add" ]; then
         mode="add";
     elif [ $param_key == "-r" ] || [ $param_key == "--remove" ]; then

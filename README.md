@@ -48,6 +48,14 @@ Apache configuration files and domain will be removed, but the directory **/var/
 
 If you plan to use this script everyday, you should probably create an alias.
 
+### Temporary Alias
+
 ```bash
 alias local-domains='/path/to/your/folder/local-domains.sh'
+```
+
+### Permanent Alias
+
+```bash
+echo alias local-domains='/path/to/your/folder/local-domains.sh' >> ~/.bash_aliases
 ```

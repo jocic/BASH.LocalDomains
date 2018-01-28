@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.0.0                                           #
+# Script Version: 1.0.1                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -42,12 +42,13 @@ echo -e "Adds a local domain and restarts apache.\n";
 # STEP 2 - DISPLAY PARAMETER HELP #
 ###################################
 
-echo "  -d {domain}, --domain {domain}               Domain that needs to be added or removed.";
-echo "  -rd {root_dir}, --root-dir {root_dir}        Root directory of a domain.";
-echo "  -a, --add                                    Select add mode.";
-echo "  -r, --remove                                 Select remove mode.";
-echo "  -v, --verbose                                Explain what is being done.";
-echo "  -h, --help                                   Display this help and exit.";
-echo "      --version                                Output version information and exit.";
+echo "  -d {domain}, --domain {domain}                       Domain that needs to be added or removed.";
+echo "  -rd {root_dir}, --root-dir {root_dir}                Root directory of a domain.";
+echo "  -sa {server_admin}, --server-admin {server_admin}    Server admin's email address";
+echo "  -a, --add                                            Select add mode.";
+echo "  -r, --remove                                         Select remove mode.";
+echo "  -v, --verbose                                        Explain what is being done.";
+echo "  -h, --help                                           Display this help and exit.";
+echo "      --version                                        Output version information and exit.";
 
 exit;

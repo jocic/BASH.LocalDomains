@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.0.0                                           #
+# Script Version: 1.0.1                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -34,8 +34,9 @@
 # LOGIC #
 #########
 
-echo "Domain:       $domain";
-echo "Root Dir:     $root_dir";
-echo "Mode:         $mode";
-echo "Enable SSL:   $enable_ssl";
-echo "Verbose Mode: $verbose_mode";
+echo "Domain:        $domain";
+echo "Root Dir:      $root_dir";
+echo "Server Admin:  $server_admin";
+echo "Mode:          $mode";
+echo "Enable SSL:    $enable_ssl";
+echo "Verbose Mode:  $verbose_mode";

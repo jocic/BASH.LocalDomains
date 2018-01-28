@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.0.0                                           #
+# Script Version: 1.0.1                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -44,6 +44,7 @@ config_filename="";
 
 domain_pattern="{{ domain }}";
 root_dir_pattern="{{ root_dir }}";
+server_admin_pattern="{{ server_admin }}";
 config_filename_pattern="[^a-zA-Z0-9]";
 
 ###################
@@ -57,19 +58,13 @@ hosts_line="";
 ###############################
 
 if [ $verbose_mode == "yes" ]; then
-    
     echo -e "1. Loading apache configuration template...";
-    
 fi
 
 if [ $enable_ssl == "yes" ]; then
-    
     apache_config=$(cat "$source_dir/templates/with-ssl.conf");
-    
 else
-    
     apache_config=$(cat "$source_dir/templates/without-ssl.conf");
-    
 fi
 
 ##################################
@@ -77,22 +72,19 @@ fi
 ##################################
 
 if [ $verbose_mode == "yes" ]; then
-    
     echo -e "2. Processing apache configuration template...";
-    
 fi
 
 apache_config="${apache_config//$domain_pattern/$domain}"
 apache_config="${apache_config//$root_dir_pattern/$root_dir}"
+apache_config="${apache_config//$server_admin_pattern/$server_admin}"
 
 #####################################
 # STEP 3 - GENERATE CONFIG FILENAME #
 #####################################
 
 if [ $verbose_mode == "yes" ]; then
-    
     echo -e "3. Generating apache configuration filename...";
-    
 fi
 
 config_filename="${domain//$config_filename_pattern/_}.conf";
@@ -102,9 +94,7 @@ config_filename="${domain//$config_filename_pattern/_}.conf";
 ##############################
 
 if [ $verbose_mode == "yes" ]; then
-    
     echo -e "4. Saving apache configuration...";
-    
 fi
 
 echo "$apache_config" > "/etc/apache2/sites-available/$config_filename";
@@ -115,9 +105,7 @@ echo "$apache_config" > "/etc/apache2/sites-enabled/$config_filename";
 ##################################
 
 if [ $verbose_mode == "yes" ]; then
-    
     echo -e "5. Creating root directory (if it doesn't exist)...";
-    
 fi
 
 if [ ! -d "$DIRECTORY" ]; then
@@ -129,9 +117,7 @@ fi
 #########################
 
 if [ $verbose_mode == "yes" ]; then
-    
     echo -e "6. Adding domain to the \"/etc/hosts\" list...";
-    
 fi
 
 hosts_data=$(cat "/etc/hosts");
@@ -147,9 +133,7 @@ echo -e "$hosts_data\n$hosts_line" > "/etc/hosts";
 ###########################
 
 if [ $verbose_mode == "yes" ]; then
-    
     echo -e "7. Restarting apache...";
-    
 fi
 
 service apache2 restart;

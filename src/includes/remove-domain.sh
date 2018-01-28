@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.0.0                                           #
+# Script Version: 1.0.1                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -54,9 +54,7 @@ hosts_line="";
 #####################################
 
 if [ $verbose_mode == "yes" ]; then
-    
     echo -e "1. Generating apache configuration filename...";
-    
 fi
 
 config_filename="${domain//$config_filename_pattern/_}.conf";
@@ -66,9 +64,7 @@ config_filename="${domain//$config_filename_pattern/_}.conf";
 ##############################
 
 if [ $verbose_mode == "yes" ]; then
-    
     echo -e "2. Removing apache configuration...";
-    
 fi
 
 rm "/etc/apache2/sites-available/$config_filename";
@@ -79,9 +75,7 @@ rm "/etc/apache2/sites-enabled/$config_filename";
 #########################
 
 if [ $verbose_mode == "yes" ]; then
-    
     echo -e "3. Removing domain from the \"/etc/hosts\" list...";
-    
 fi
 
 hosts_data=$(cat "/etc/hosts");
@@ -97,9 +91,7 @@ echo "$hosts_data" > "/etc/hosts";
 ###########################
 
 if [ $verbose_mode == "yes" ]; then
-    
     echo -e "4. Restarting apache...";
-    
 fi
 
 service apache2 restart;
