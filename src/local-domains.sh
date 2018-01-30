@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.0.1                                           #
+# Script Version: 1.0.2                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -35,13 +35,13 @@
 ##################
 
 source_dir="$(cd "$( dirname "${BASH_SOURCE[0]}")" && pwd)"
-version="1.0.0";
+version="1.0.2";
 
 ###################
 # OTHER VARIABLES #
 ###################
 
-temp=""
+temp="";
 
 #########
 # LOGIC #
@@ -104,13 +104,9 @@ else
     if [[ $temp =~ ^[Yy]$ ]]; then
         
         if [ $mode == "add" ]; then
-            
             source "$source_dir/includes/add-domain.sh";
-            
         else
-            
             source "$source_dir/includes/remove-domain.sh";
-            
         fi
         
     else

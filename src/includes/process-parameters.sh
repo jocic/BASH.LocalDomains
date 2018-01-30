@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.0.1                                           #
+# Script Version: 1.0.2                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -38,6 +38,8 @@ domain="";
 mode="add";
 root_dir="/var/www/html";
 server_admin="webmaster@localhost";
+cert_file="/etc/apache2/ssl/dummy-ssl.crt";
+cert_key="/etc/apache2/ssl/dummy-ssl.key";
 enable_ssl="no";
 verbose_mode="no";
 display_help="no";
@@ -74,6 +76,10 @@ while :
         root_dir=$param_value;
     elif [ $param_key == "-sa" ] || [ $param_key == "--server-admin" ]; then
         server_admin=$param_value;
+    elif [ $param_key == "-cf" ] || [ $param_key == "--cert-file" ]; then
+        cert_file=$param_value;
+    elif [ $param_key == "-ck" ] || [ $param_key == "--cert-key" ]; then
+        cert_key=$param_value;
     elif [ $param_key == "-a" ] || [ $param_key == "--add" ]; then
         mode="add";
     elif [ $param_key == "-r" ] || [ $param_key == "--remove" ]; then

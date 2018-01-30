@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.0.1                                           #
+# Script Version: 1.0.2                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -45,20 +45,24 @@ config_filename="";
 domain_pattern="{{ domain }}";
 root_dir_pattern="{{ root_dir }}";
 server_admin_pattern="{{ server_admin }}";
+cert_file_pattern="{{ cert_file }}";
+cert_key_pattern="{{ cert_key }}";
 config_filename_pattern="[^a-zA-Z0-9]";
 
 ###################
 # OTHER VARIABLES #
 ###################
 
+cert_folder="";
 hosts_line="";
+temp="";
 
 ###############################
 # STEP 1 - LOAD APACHE CONFIG #
 ###############################
 
 if [ $verbose_mode == "yes" ]; then
-    echo -e "1. Loading apache configuration template...";
+    echo -e "- Loading apache configuration template...";
 fi
 
 if [ $enable_ssl == "yes" ]; then
@@ -72,19 +76,21 @@ fi
 ##################################
 
 if [ $verbose_mode == "yes" ]; then
-    echo -e "2. Processing apache configuration template...";
+    echo -e "- Processing apache configuration template...";
 fi
 
-apache_config="${apache_config//$domain_pattern/$domain}"
-apache_config="${apache_config//$root_dir_pattern/$root_dir}"
-apache_config="${apache_config//$server_admin_pattern/$server_admin}"
+apache_config="${apache_config//$domain_pattern/$domain}";
+apache_config="${apache_config//$root_dir_pattern/$root_dir}";
+apache_config="${apache_config//$server_admin_pattern/$server_admin}";
+apache_config="${apache_config//$cert_file_pattern/$cert_file}";
+apache_config="${apache_config//$cert_key_pattern/$cert_key}";
 
 #####################################
 # STEP 3 - GENERATE CONFIG FILENAME #
 #####################################
 
 if [ $verbose_mode == "yes" ]; then
-    echo -e "3. Generating apache configuration filename...";
+    echo -e "- Generating apache configuration filename...";
 fi
 
 config_filename="${domain//$config_filename_pattern/_}.conf";
@@ -94,30 +100,105 @@ config_filename="${domain//$config_filename_pattern/_}.conf";
 ##############################
 
 if [ $verbose_mode == "yes" ]; then
-    echo -e "4. Saving apache configuration...";
+    echo -e "- Saving apache configuration...";
 fi
 
 echo "$apache_config" > "/etc/apache2/sites-available/$config_filename";
 echo "$apache_config" > "/etc/apache2/sites-enabled/$config_filename";
 
+####################################
+# STEP 5 - CREATE CERT DIRECTORIES #
+####################################
+
+if [ $verbose_mode == "yes" ]; then
+    echo -e "- Creating SSL directories (if they don't exist)...";
+fi
+
+cert_folder=$(dirname "$cert_file");
+
+if [ ! -d "$cert_folder" ]; then
+  mkdir -p -m 700 $cert_folder
+fi
+
+cert_folder=$(dirname "$cert_key");
+
+if [ ! -d "$cert_folder" ]; then
+  mkdir -p -m 700 $cert_folder
+fi
+
+###################################
+# STEP 6 - ADD DUMMY CERTIFICATES #
+###################################
+
+if [ $verbose_mode == "yes" ]; then
+    echo -e "- Adding dummy SSL certificates...";
+fi
+
+cp "$source_dir/templates/dummy-cert.crt" $cert_file;
+cp "$source_dir/templates/dummy-cert.key" $cert_key;
+
 ##################################
-# STEP 5 - CREATE ROOT DIRECTORY #
+# STEP 7 - CREATE ROOT DIRECTORY #
 ##################################
 
 if [ $verbose_mode == "yes" ]; then
-    echo -e "5. Creating root directory (if it doesn't exist)...";
+    echo -e "- Creating root directory (if it doesn't exist)...";
 fi
 
 if [ ! -d "$DIRECTORY" ]; then
-  mkdir -p -m 777 $root_dir
+  mkdir -p -m 777 /var/apache2/ssl
 fi
 
-#########################
-# STEP 6 - ADD HOSTNAME #
-#########################
+##################################
+# STEP 8 - ENABLE REWRITE MODULE #
+##################################
+
+temp=$(ls /etc/apache2/mods-enabled/ | grep -c "rewrite");
+
+if [ $temp == 0 ]; then
+    
+    echo -e "\nRewrite module is currently disabled.\n";
+    
+    read -p "Enable rewrite module? (y/n) - " -n 1 temp;
+    
+    echo -e "\n";
+    
+    if [[ $temp =~ ^[Yy]$ ]]; then
+        a2enmod rewrite;
+    fi
+    
+fi
+
+##############################
+# STEP 9 - ENABLE SSL MODULE #
+##############################
+
+if [ $enable_ssl == "yes" ]; then
+    
+    temp=$(ls /etc/apache2/mods-enabled/ | grep -c "ssl");
+    
+    if [ $temp == 0 ]; then
+        
+        echo -e "\nRewrite module is currently disabled.\n";
+        
+        read -p "Enable SSL module? (y/n) - " -n 1 temp;
+        
+        echo -e "\n";
+        
+        if [[ $temp =~ ^[Yy]$ ]]; then
+            a2enmod ssl;
+        fi
+        
+    fi
+    
+fi
+
+##########################
+# STEP 10 - ADD HOSTNAME #
+##########################
 
 if [ $verbose_mode == "yes" ]; then
-    echo -e "6. Adding domain to the \"/etc/hosts\" list...";
+    echo -e "- Adding domain to the \"/etc/hosts\" list...";
 fi
 
 hosts_data=$(cat "/etc/hosts");
@@ -129,11 +210,11 @@ hosts_data="${hosts_data//$hosts_line/}"; # Prevent Duplicate Lines
 echo -e "$hosts_data\n$hosts_line" > "/etc/hosts";
 
 ###########################
-# STEP 7 - RESTART APACHE #
+# STEP 11 - RESTART APACHE #
 ###########################
 
 if [ $verbose_mode == "yes" ]; then
-    echo -e "7. Restarting apache...";
+    echo -e "- Restarting apache...";
 fi
 
 service apache2 restart;
