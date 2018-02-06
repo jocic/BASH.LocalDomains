@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.0.2                                           #
+# Script Version: 1.0.3                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -49,6 +49,7 @@ echo "  -cf {cert_file}, --cert-file {cert_file}             Ceritification file
 echo "  -ck {cert_key}, --cert-key {cert_key}                Ceritification key location.";
 echo "  -a, --add                                            Select add mode.";
 echo "  -r, --remove                                         Select remove mode.";
+echo "  -s, --ssl                                            Enable SSL.";
 echo "  -v, --verbose                                        Explain what is being done.";
 echo "  -h, --help                                           Display this help and exit.";
 echo "      --version                                        Output version information and exit.";

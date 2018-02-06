@@ -44,7 +44,14 @@ bash ./local-domains.sh -d www.my-cool-server.test -rd /var/www/html/my-cool-ser
 
 Apache configuration files and domain will be removed, but the directory **/var/www/html/my-cool-server** will remain unaffected.
 
+## Parameters
+
+
+
 ## Notes
+
+- Enabling SSL is easy, just pass the **-s** or **--ssl** parameter when adding a domain
+- Removing a domain will not remove the files from the specified root directory, you will have to do that manually
 
 If you plan to use this script everyday, you should probably create an alias.
 
@@ -59,3 +66,5 @@ alias local-domains="/path/to/your/folder/local-domains.sh"
 ```bash
 echo alias local-domains="/path/to/your/folder/local-domains.sh" >> ~/.bash_aliases
 ```
+
+If you have any questions, please don't hessitate to contact me.

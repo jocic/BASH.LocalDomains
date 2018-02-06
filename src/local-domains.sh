@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.0.2                                           #
+# Script Version: 1.0.3                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -35,7 +35,7 @@
 ##################
 
 source_dir="$(cd "$( dirname "${BASH_SOURCE[0]}")" && pwd)"
-version="1.0.2";
+version="1.0.3";
 
 ###################
 # OTHER VARIABLES #
