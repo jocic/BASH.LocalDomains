@@ -38,11 +38,9 @@ function is_root_user()
 {
     # Logic.
     
-    if [[ "$(id -u)" == "0" ]]; then
-        return 1;
-    else
-        return 0;
-    fi
+    [[ "$(id -u)" == "0" ]] && return 1;
+    
+    return 0;
 }
 
 function is_valid_domain()
@@ -55,11 +53,9 @@ function is_valid_domain()
     
     temp=$(echo $1 | grep -P '(?=^.{5,254}$)(^(?:(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)');
     
-    if [[ -z $temp ]]; then
-        return 0;
-    else
-        return 1;
-    fi
+    [[ -z $temp ]] && return 0;
+    
+    return 1;
 }
 
 function is_valid_email_address()
@@ -72,11 +68,9 @@ function is_valid_email_address()
     
     temp=$(echo $1 | grep -P "^([A-Za-z0-9._%+-])+(@)+([A-Za-z0-9.-])+$");
     
-    if [[ -z $temp ]]; then
-        return 0;
-    else
-        return 1;
-    fi
+    [[ -z $temp ]] && return 0;
+    
+    return 1;
 }
 
 function is_valid_ip_address()
@@ -89,31 +83,25 @@ function is_valid_ip_address()
     
     temp=$(echo $1 | grep -P "^(127\.)+([0-9]{1,3}\.)+([0-9]{1,3}\.)+([0-9]{1,3})$");
     
-    if [[ -z $temp ]]; then
-        return 0;
-    else
-        return 1;
-    fi
+    [[ -z $temp ]] && return 0;
+    
+    return 1;
 }
 
 function is_valid_directory()
 {
     # Logic.
     
-    if [[ -d $1 ]]; then
-        return 1;
-    else
-        return 0;
-    fi
+    [[ -d $1 ]] && return 1;
+    
+    return 0;
 }
 
 function is_valid_file()
 {
     # Logic.
     
-    if [[ -f $1 ]]; then
-        return 1;
-    else
-        return 0;
-    fi
+    [[ -f $1 ]] && return 1;
+    
+    return 0;
 }

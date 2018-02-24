@@ -35,7 +35,7 @@
 ##################
 
 source_dir="$(cd "$( dirname "${BASH_SOURCE[0]}")" && pwd)"
-version="1.1.0";
+version="1.1.1";
 
 ###################
 # OTHER VARIABLES #
@@ -87,33 +87,19 @@ else
         
     else
         
-        if [[ -z $ip_address ]]; then
-            ip_address="127.0.0.1";
-        fi
+        [[ -z $ip_address ]] && ip_address="127.0.0.1";
         
-        if [[ -z $root_dir ]]; then
-            root_dir="/var/www/html";
-        fi
+        [[ -z $root_dir ]] && root_dir="/var/www/html";
         
-        if [[ -z $server_admin ]]; then
-            server_admin="webmaster@localhost";
-        fi
+        [[ -z $server_admin ]] && server_admin="webmaster@localhost";
         
-        if [[ -z $enable_ssl ]]; then
-            enable_ssl="no";
-        fi
+        [[ -z $enable_ssl ]] && enable_ssl="no";
         
-        if [[ -z $cert_file ]]; then
-            cert_file="/etc/apache2/ssl/dummy-ssl.crt";
-        fi
+        [[ -z $cert_file ]] && cert_file="/etc/apache2/ssl/dummy-ssl.crt";
         
-        if [[ -z $cert_key ]]; then
-            cert_key="/etc/apache2/ssl/dummy-ssl.key";
-        fi
+        [[ -z $cert_key ]] && cert_key="/etc/apache2/ssl/dummy-ssl.key";
         
-        if [[ -z $verbose_mode ]]; then
-            verbose_mode="no";
-        fi
+        [[ -z $verbose_mode ]] && verbose_mode="no";
         
     fi
     
