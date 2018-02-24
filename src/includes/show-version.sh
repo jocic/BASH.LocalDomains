@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.0.3                                           #
+# Script Version: 1.1.0                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #

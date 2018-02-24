@@ -30,21 +30,26 @@
 # OTHER DEALINGS IN THE SOFTWARE.                                 #
 ###################################################################
 
-#########
-# LOGIC #
-#########
+############################
+# STEP 1 - SERVICE COMMAND #
+############################
 
-echo "Domain:          $domain";
-echo "Root Dir:        $root_dir";
-echo "Server Admin:    $server_admin";
-echo "Mode:            $mode";
-echo "Enable SSL:      $enable_ssl";
-
-if [ $enable_ssl == "yes" ]; then
+if [ -z "$(command -v service)" ]; then
     
-    echo "Cert. File:      $cert_file";
-    echo "Cert. Key:       $cert_key";
+    echo "Error: Command \"service\" is missing. Please install it by typing \"apt-get install service\".";
     
-fi
+    exit;
+    
+fi;
 
-echo "Verbose Mode:    $verbose_mode";
+############################
+# STEP 2 - APACHE2 COMMAND #
+############################
+
+if [ -z "$(command -v apache2)" ]; then
+    
+    echo "Error: Command \"apache2\" is missing. Please install it by typing \"apt-get install apache2\".";
+    
+    exit;
+    
+fi;

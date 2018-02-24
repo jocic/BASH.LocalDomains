@@ -34,7 +34,11 @@ Directory **/var/www/html/my-cool-server** will be created if it doesn't already
 
 You can now access **www.my-cool-server.test** from your network.
 
-## Example 2 - Removing
+## Example 2 - Adding (Interactive Mode)
+
+
+
+## Example 3 - Removing
 
 In this example, we are removing a local domain **www.my-cool-server.test**.
 
@@ -43,6 +47,10 @@ bash ./local-domains.sh -d www.my-cool-server.test -rd /var/www/html/my-cool-ser
 ```
 
 Apache configuration files and domain will be removed, but the directory **/var/www/html/my-cool-server** will remain unaffected.
+
+## Example 4 - Removing (Interactive Mode)
+
+
 
 ## Parameters
 

@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.0.3                                           #
+# Script Version: 1.1.0                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -35,7 +35,7 @@
 ##################
 
 source_dir="$(cd "$( dirname "${BASH_SOURCE[0]}")" && pwd)"
-version="1.0.3";
+version="1.1.0";
 
 ###################
 # OTHER VARIABLES #
@@ -46,6 +46,8 @@ temp="";
 #########
 # LOGIC #
 #########
+
+source "$source_dir/includes/check-dependencies.sh";
 
 source "$source_dir/includes/process-parameters.sh";
 
