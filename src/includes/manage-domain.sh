@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.1.0                                           #
+# Script Version: 1.1.1                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -107,7 +107,7 @@ if [[ -z $domain ]]; then
             read -p "Domain (ex. www.my-domain.com) - " temp;
             echo -e;
             
-            if [[ $(is_valid_domain $temp) == "yes" ]]; then
+            if [[ $(is_valid_domain $temp; echo $?) -eq 1 ]]; then
                 
                 domain=$temp;
                 
@@ -131,7 +131,7 @@ if [[ -z $domain ]]; then
         echo -e "- Please select domain you want removed.";
         echo -e;
         
-        # Print Domains
+        # Print Domains.
         
         available_domains=$(cat "/etc/hosts" | grep "^127." | sed -r "s/^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)//g");
         
@@ -196,7 +196,7 @@ if [[ -z $ip_address ]] && [[ $mode == "add" ]]; then
             
             ip_address="127.0.0.1";
             
-        elif [[ $(is_valid_ip_address $temp) == "yes" ]]; then
+        elif [[ $(is_valid_ip_address $temp; echo $?) -eq 1 ]]; then
             
             ip_address=$temp;
             
@@ -234,7 +234,7 @@ if [[ -z $root_dir ]] && [[ $mode == "add" ]]; then
             
             root_dir="/var/www/html";
             
-        elif [[ $(is_valid_directory $temp) == "yes" ]]; then
+        elif [[ $(is_valid_directory $temp; echo $?) -eq 1 ]]; then
             
             root_dir=$temp;
             
@@ -272,7 +272,7 @@ if [[ -z $server_admin ]] && [[ $mode == "add" ]]; then
             
             server_admin="webmaster@localhost";
             
-        elif [[ $(is_valid_email_address $temp) == "yes" ]]; then
+        elif [[ $(is_valid_email_address $temp; echo $?) -eq 1 ]]; then
             
             server_admin=$temp;
             
@@ -332,7 +332,7 @@ fi
 # STEP 7- CERTIFICATE FILE #
 ############################
 
-if [[ -z $cert_file ]] && [[ $mode == "add" ]]; then
+if [[ -z $cert_file ]] && [[ $mode == "add" ]] && [[ $enable_ssl == "yes" ]]; then
     
     # Print Title.
     
@@ -351,7 +351,7 @@ if [[ -z $cert_file ]] && [[ $mode == "add" ]]; then
             
             cert_file="/etc/apache2/ssl/dummy-ssl.crt";
             
-        elif [[ $(is_valid_file $temp) == "yes" ]]; then
+        elif [[ $(is_valid_file $temp; echo $?) -eq 1 ]]; then
             
             cert_file=$temp;
             
@@ -370,7 +370,7 @@ fi
 # STEP 8 - CERTIFICATE KEY #
 ############################
 
-if [[ -z $cert_key ]] && [[ $mode == "add" ]]; then
+if [[ -z $cert_key ]] && [[ $mode == "add" ]] && [[ $enable_ssl == "yes" ]]; then
     
     # Print Title.
     
@@ -382,14 +382,14 @@ if [[ -z $cert_key ]] && [[ $mode == "add" ]]; then
     while [[ -z $cert_key ]]
     do
         
-        read -p "Certification file (ex. /etc/apache2/ssl/dummy-ssl.crt) - " temp;
+        read -p "Certification key (ex. /etc/apache2/ssl/dummy-ssl.key) - " temp;
         echo -e;
         
         if [[ -z $temp ]]; then
             
             cert_key="/etc/apache2/ssl/dummy-ssl.key";
             
-        elif [[ $(is_valid_file $temp) == "yes" ]]; then
+        elif [[ $(is_valid_file $temp; echo $?) -eq 1 ]]; then
             
             cert_key=$temp;
             

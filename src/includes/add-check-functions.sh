@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.1.0                                           #
+# Script Version: 1.1.1                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -39,9 +39,9 @@ function is_root_user()
     # Logic.
     
     if [[ "$(id -u)" == "0" ]]; then
-        echo "yes";
+        return 1;
     else
-        echo "no";
+        return 0;
     fi
 }
 
@@ -56,9 +56,9 @@ function is_valid_domain()
     temp=$(echo $1 | grep -P '(?=^.{5,254}$)(^(?:(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)');
     
     if [[ -z $temp ]]; then
-        echo "no";
+        return 0;
     else
-        echo "yes";
+        return 1;
     fi
 }
 
@@ -73,9 +73,9 @@ function is_valid_email_address()
     temp=$(echo $1 | grep -P "^([A-Za-z0-9._%+-])+(@)+([A-Za-z0-9.-])+$");
     
     if [[ -z $temp ]]; then
-        echo "no";
+        return 0;
     else
-        echo "yes";
+        return 1;
     fi
 }
 
@@ -87,41 +87,33 @@ function is_valid_ip_address()
     
     # Logic.
     
-    temp=$(echo $1 | grep -P "^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})$");
+    temp=$(echo $1 | grep -P "^(127\.)+([0-9]{1,3}\.)+([0-9]{1,3}\.)+([0-9]{1,3})$");
     
     if [[ -z $temp ]]; then
-        echo "no";
+        return 0;
     else
-        echo "yes";
+        return 1;
     fi
 }
 
 function is_valid_directory()
 {
-    # Core Variables.
-    
-    temp="";
-    
     # Logic.
     
     if [[ -d $1 ]]; then
-        echo "yes";
+        return 1;
     else
-        echo "no";
+        return 0;
     fi
 }
 
 function is_valid_file()
 {
-    # Core Variables.
-    
-    temp="";
-    
     # Logic.
     
     if [[ -f $1 ]]; then
-        echo "yes";
+        return 1;
     else
-        echo "no";
+        return 0;
     fi
 }

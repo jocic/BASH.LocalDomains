@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.1.0                                           #
+# Script Version: 1.1.1                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -47,7 +47,7 @@ root_dir_pattern="{{ root_dir }}";
 server_admin_pattern="{{ server_admin }}";
 cert_file_pattern="{{ cert_file }}";
 cert_key_pattern="{{ cert_key }}";
-config_filename_pattern="[^a-zA-Z0-9]";
+config_filename_pattern="[^a-zA-Z0-9]"; # For Some Reason [A-z] Does Not Work
 
 ###################
 # OTHER VARIABLES #
@@ -135,8 +135,13 @@ if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Adding dummy SSL certificates...";
 fi
 
-cp "$source_dir/templates/dummy-cert.crt" $cert_file;
-cp "$source_dir/templates/dummy-cert.key" $cert_key;
+if [ ! -z $cert_file ]; then
+    cp "$source_dir/templates/dummy-cert.crt" $cert_file;
+fi
+
+if [ ! -z $cert_key ]; then
+    cp "$source_dir/templates/dummy-cert.key" $cert_key;
+fi
 
 ##################################
 # STEP 7 - CREATE ROOT DIRECTORY #
@@ -212,9 +217,9 @@ hosts_data=$(sed -z "s/{new-line-workaround}\n//g" <<< $hosts_data); # Remove Ne
 
 echo -e "$hosts_data\n$domain_line" > "/etc/hosts";
 
-###########################
+############################
 # STEP 11 - RESTART APACHE #
-###########################
+############################
 
 if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Restarting apache...";

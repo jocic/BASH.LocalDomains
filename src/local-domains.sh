@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.1.0                                           #
+# Script Version: 1.1.1                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -69,7 +69,7 @@ else
     # STEP 1 - CHECK PRICILEDGES #
     ##############################
     
-    if [[ $(is_root_user) == "no" ]]; then
+    if is_root_user; then
         
         echo "Error: Local Domains must be ran with root priviledges.";
         
@@ -133,43 +133,69 @@ else
     
     # Check Domain.
     
-    if [[ $(is_valid_domain $domain) == "no" ]]; then
+    if [[ $(is_valid_domain $domain; echo $?) -eq 0 ]]; then
         
         echo "Error: Invalid domain name provided.";
         
         exit;
         
-    fi;
+    fi
     
     # Check IP Address.
     
-    if [[ $mode == "add" ]] && [[ $(is_valid_ip_address $ip_address) == "no" ]]; then
+    if [[ $mode == "add" ]] && [[ $(is_valid_ip_address $ip_address; echo $?) -eq 0 ]]; then
         
-        echo "Error: Invalid domain name provided.";
+        echo "Error: Invalid IP address provided.";
         
         exit;
         
-    fi;
+    fi
     
     # Check Root Directory.
     
-    if [[ $mode == "add" ]] && [[ $(is_valid_directory $root_dir) == "no" ]]; then
+    if [[ $mode == "add" ]] && [[ $(is_valid_directory $root_dir; echo $?) -eq 0 ]]; then
         
         echo "Error: Invalid root directory provided. It doesn't exist.";
         
         exit;
         
-    fi;
+    fi
     
     # Check Server Admin.
     
-    if [[ $mode == "add" ]] && [[ $(is_valid_email_address $server_admin) == "no" ]]; then
+    if [[ $mode == "add" ]] && [[ $(is_valid_email_address $server_admin; echo $?) -eq 0 ]]; then
         
         echo "Error: Invalid email address for server admin provided.";
         
         exit;
         
-    fi;
+    fi
+    
+    # Check Certificate File & Key.
+    
+    if [[ $enable_ssl == "yes" ]]; then
+        
+        # File.
+        
+        if [[ $(is_valid_file $cert_file; echo $?) -eq 0 ]]; then
+            
+            echo "Error: Invalid ceritfication file provided. It doesn't exist.";
+            
+            exit;
+            
+        fi
+        
+        # Key.
+        
+        if [[ $(is_valid_file $cert_key; echo $?) -eq 0 ]]; then
+            
+            echo "Error: Invalid ceritfication key provided. It doesn't exist.";
+            
+            exit;
+            
+        fi
+        
+    fi
     
     ###########################
     # STEP 4 - PROCESS DOMAIN #
