@@ -53,28 +53,33 @@ domain_regex="";
 # STEP 1 - GENERATE CONFIG FILENAME #
 #####################################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Generating apache configuration filename...";
 fi
 
 config_filename="${domain//$config_filename_pattern/_}.conf";
 
-##############################
-# STEP 2 - SAVE CONFIG FILES #
-##############################
+################################
+# STEP 2 - REMOVE CONFIG FILES #
+################################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Removing apache configuration...";
 fi
 
-rm "/etc/apache2/sites-available/$config_filename";
-rm "/etc/apache2/sites-enabled/$config_filename";
+if [[ -f "/etc/apache2/sites-available/$config_filename" ]]; then
+    rm "/etc/apache2/sites-available/$config_filename";
+fi
+
+if [[ -f "/etc/apache2/sites-enabled/$config_filename" ]]; then
+    rm "/etc/apache2/sites-enabled/$config_filename";
+fi
 
 #########################
 # STEP 3 - ADD HOSTNAME #
 #########################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Removing domain from the \"/etc/hosts\" list...";
 fi
 
@@ -91,7 +96,7 @@ echo "$hosts_data" > "/etc/hosts";
 # STEP 4 - RESTART APACHE #
 ###########################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Restarting apache...";
 fi
 

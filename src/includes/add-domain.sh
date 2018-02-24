@@ -62,11 +62,11 @@ temp="";
 # STEP 1 - LOAD APACHE CONFIG #
 ###############################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Loading apache configuration template...";
 fi
 
-if [ $enable_ssl == "yes" ]; then
+if [[ $enable_ssl == "yes" ]]; then
     apache_config=$(cat "$source_dir/templates/with-ssl.conf");
 else
     apache_config=$(cat "$source_dir/templates/without-ssl.conf");
@@ -76,7 +76,7 @@ fi
 # STEP 2 - PROCESS APACHE CONFIG #
 ##################################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Processing apache configuration template...";
 fi
 
@@ -90,7 +90,7 @@ apache_config="${apache_config//$cert_key_pattern/$cert_key}";
 # STEP 3 - GENERATE CONFIG FILENAME #
 #####################################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Generating apache configuration filename...";
 fi
 
@@ -100,7 +100,7 @@ config_filename="${domain//$config_filename_pattern/_}.conf";
 # STEP 4 - SAVE CONFIG FILES #
 ##############################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Saving apache configuration...";
 fi
 
@@ -111,19 +111,19 @@ echo "$apache_config" > "/etc/apache2/sites-enabled/$config_filename";
 # STEP 5 - CREATE CERT DIRECTORIES #
 ####################################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Creating SSL directories (if they don't exist)...";
 fi
 
 cert_folder=$(dirname "$cert_file");
 
-if [ ! -d "$cert_folder" ]; then
+if [[ ! -d $cert_folder ]]; then
   mkdir -p -m 700 $cert_folder
 fi
 
 cert_folder=$(dirname "$cert_key");
 
-if [ ! -d "$cert_folder" ]; then
+if [[ ! -d $cert_folder ]]; then
   mkdir -p -m 700 $cert_folder
 fi
 
@@ -131,7 +131,7 @@ fi
 # STEP 6 - ADD DUMMY CERTIFICATES #
 ###################################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Adding dummy SSL certificates...";
 fi
 
@@ -142,11 +142,11 @@ cp "$source_dir/templates/dummy-cert.key" $cert_key;
 # STEP 7 - CREATE ROOT DIRECTORY #
 ##################################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Creating root directory (if it doesn't exist)...";
 fi
 
-if [ ! -d "$DIRECTORY" ]; then
+if [[ ! -d "$DIRECTORY" ]]; then
   mkdir -p -m 777 /var/apache2/ssl
 fi
 
@@ -156,7 +156,7 @@ fi
 
 temp=$(ls /etc/apache2/mods-enabled/ | grep -c "rewrite");
 
-if [ $temp == 0 ]; then
+if [[ $temp == 0 ]]; then
     
     echo -e "\nRewrite module is currently disabled.\n";
     
@@ -174,7 +174,7 @@ fi
 # STEP 9 - ENABLE SSL MODULE #
 ##############################
 
-if [ $enable_ssl == "yes" ]; then
+if [[ $enable_ssl == "yes" ]]; then
     
     temp=$(ls /etc/apache2/mods-enabled/ | grep -c "ssl");
     
@@ -198,7 +198,7 @@ fi
 # STEP 10 - ADD HOSTNAME #
 ##########################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Adding domain to the \"/etc/hosts\" list...";
 fi
 
@@ -216,7 +216,7 @@ echo -e "$hosts_data\n$domain_line" > "/etc/hosts";
 # STEP 11 - RESTART APACHE #
 ###########################
 
-if [ $verbose_mode == "yes" ]; then
+if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Restarting apache...";
 fi
 

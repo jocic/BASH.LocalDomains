@@ -51,15 +51,15 @@ source "$source_dir/includes/check-dependencies.sh";
 source "$source_dir/includes/process-parameters.sh";
 source "$source_dir/includes/add-check-functions.sh";
 
-if [ $display_help == "yes" ]; then
+if [[ $display_help == "yes" ]]; then
     
     source "$source_dir/includes/show-help.sh";
     
-elif [ $display_version == "yes" ]; then
+elif [[ $display_version == "yes" ]]; then
     
     source "$source_dir/includes/show-version.sh";
     
-elif [ $list_domains == "yes" ]; then
+elif [[ $list_domains == "yes" ]]; then
     
     source "$source_dir/includes/list-domains.sh";
     
@@ -69,7 +69,7 @@ else
     # STEP 1 - CHECK PRICILEDGES #
     ##############################
     
-    if [ $(is_root_user) == "no" ]; then
+    if [[ $(is_root_user) == "no" ]]; then
         
         echo "Error: Local Domains must be ran with root priviledges.";
         
@@ -81,37 +81,37 @@ else
     # STEP 2 - GATHER OR SET DEFAULT PARAMETERS #
     #############################################
     
-    if [ $interactive_mode == "yes" ]; then
+    if [[ $interactive_mode == "yes" ]]; then
         
         source "$source_dir/includes/manage-domain.sh";
         
     else
         
-        if [ -z $ip_address ]; then
+        if [[ -z $ip_address ]]; then
             ip_address="127.0.0.1";
         fi
         
-        if [ -z $root_dir ]; then
+        if [[ -z $root_dir ]]; then
             root_dir="/var/www/html";
         fi
         
-        if [ -z $server_admin ]; then
+        if [[ -z $server_admin ]]; then
             server_admin="webmaster@localhost";
         fi
         
-        if [ -z $enable_ssl ]; then
+        if [[ -z $enable_ssl ]]; then
             enable_ssl="no";
         fi
         
-        if [ -z $cert_file ]; then
+        if [[ -z $cert_file ]]; then
             cert_file="/etc/apache2/ssl/dummy-ssl.crt";
         fi
         
-        if [ -z $cert_key ]; then
+        if [[ -z $cert_key ]]; then
             cert_key="/etc/apache2/ssl/dummy-ssl.key";
         fi
         
-        if [ -z $verbose_mode ]; then
+        if [[ -z $verbose_mode ]]; then
             verbose_mode="no";
         fi
         
@@ -123,7 +123,7 @@ else
     
     # Check Mode.
     
-    if [ -z $mode ]; then
+    if [[ -z $mode ]]; then
         
         echo "Error: You haven't selected a mode.";
         
@@ -133,7 +133,7 @@ else
     
     # Check Domain.
     
-    if [ $(is_valid_domain $domain) == "no" ]; then
+    if [[ $(is_valid_domain $domain) == "no" ]]; then
         
         echo "Error: Invalid domain name provided.";
         
@@ -143,7 +143,7 @@ else
     
     # Check IP Address.
     
-    if [ $mode == "add" ] && [ $(is_valid_ip_address $ip_address) == "no" ]; then
+    if [[ $mode == "add" ]] && [[ $(is_valid_ip_address $ip_address) == "no" ]]; then
         
         echo "Error: Invalid domain name provided.";
         
@@ -153,7 +153,7 @@ else
     
     # Check Root Directory.
     
-    if [ $mode == "add" ] && [ $(is_valid_directory $root_dir) == "no" ]; then
+    if [[ $mode == "add" ]] && [[ $(is_valid_directory $root_dir) == "no" ]]; then
         
         echo "Error: Invalid root directory provided. It doesn't exist.";
         
@@ -163,7 +163,7 @@ else
     
     # Check Server Admin.
     
-    if [ $mode == "add" ] && [ $(is_valid_email_address $server_admin) == "no" ]; then
+    if [[ $mode == "add" ]] && [[ $(is_valid_email_address $server_admin) == "no" ]]; then
         
         echo "Error: Invalid email address for server admin provided.";
         
@@ -171,46 +171,56 @@ else
         
     fi;
     
-    #################################
-    # STEP 4 - ASK FOR CONFIRMATION #
-    #################################
+    ###########################
+    # STEP 4 - PROCESS DOMAIN #
+    ###########################
+    
+    # Show Parameters.
     
     source "$source_dir/includes/show-parameters.sh";
     
+    # Print Title.
+    
     echo -e "\nPlease review parameters above before proceeding.\n";
     
-    read -p "Continue? (y/n) - " -n 1 temp;
+    # Process Input.
     
-    ###########################
-    # STEP 5 - PROCESS DOMAIN #
-    ###########################
-    
-    echo -e "\n";
-    
-    if [[ $temp =~ ^[Yy]$ ]]; then
+    while true;
+    do
+        read -p "Continue? (y/n) - " -n 1 temp;
+        echo -e;
         
-        if [ $mode == "add" ]; then
+        if [[ $temp =~ ^[Yy]$ ]]; then
             
-            source "$source_dir/includes/add-domain.sh";
-            
-        elif [ $mode == "remove" ]; then
-            
-            source "$source_dir/includes/remove-domain.sh";
-            
-        else
-            
-            echo -e "Invalid mode selected.";
+            if [[ $mode == "add" ]]; then
+                
+                source "$source_dir/includes/add-domain.sh";
+                
+            elif [[ $mode == "remove" ]]; then
+                
+                source "$source_dir/includes/remove-domain.sh";
+                
+            else
+                
+                echo -e "Invalid mode selected.";
+                
+            fi
             
             exit;
             
+        elif [[ $temp =~ ^[Nn]$ ]]; then
+            
+            echo -e;
+            echo -e "Exiting...";
+            
+            exit;
+            
+        else
+            
+            echo -e;
+            echo -e "Invalid option selected.";
+            echo -e;
+            
         fi
-        
-    else
-        
-        echo -e "Exiting...";
-        
-        exit;
-        
-    fi
-    
+    done
 fi

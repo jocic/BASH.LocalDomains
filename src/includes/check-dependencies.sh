@@ -34,7 +34,7 @@
 # STEP 1 - SERVICE COMMAND #
 ############################
 
-if [ -z "$(command -v service)" ]; then
+if [[ -z "$(command -v service)" ]]; then
     
     echo "Error: Command \"service\" is missing. Please install it by typing \"apt-get install service\".";
     
@@ -46,7 +46,7 @@ fi;
 # STEP 2 - APACHE2 COMMAND #
 ############################
 
-if [ -z "$(command -v apache2)" ]; then
+if [[ -z "$(command -v apache2)" ]]; then
     
     echo "Error: Command \"apache2\" is missing. Please install it by typing \"apt-get install apache2\".";
     

@@ -34,7 +34,7 @@
 # LOGIC #
 #########
 
-if [ $mode == "add" ]; then
+if [[ $mode == "add" ]]; then
     
     echo "Domain:          $domain";
     echo "IP Address:      $ip_address";
@@ -43,7 +43,7 @@ if [ $mode == "add" ]; then
     echo "Mode:            $mode";
     echo "Enable SSL:      $enable_ssl";
     
-    if [ $enable_ssl == "yes" ]; then
+    if [[ $enable_ssl == "yes" ]]; then
         
         echo "Cert. File:      $cert_file";
         echo "Cert. Key:       $cert_key";

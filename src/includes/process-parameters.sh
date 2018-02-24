@@ -71,35 +71,35 @@ while :
     param_key=$(eval echo \${$current_param});
     param_value=$(eval echo \${$next_param});
     
-    if [ -z $param_key ]; then
+    if [[ -z $param_key ]]; then
         break;
-    elif [ $param_key == "-d" ] || [ $param_key == "--domain" ]; then
+    elif [[ $param_key == "-d" ]] || [[ $param_key == "--domain" ]]; then
         domain=$param_value;
-    elif [ $param_key == "-ip" ] || [ $param_key == "--ip-address" ]; then
+    elif [[ $param_key == "-ip" ]] || [[ $param_key == "--ip-address" ]]; then
         ip_address=$param_value;
-    elif [ $param_key == "-rd" ] || [ $param_key == "--root-dir" ]; then
+    elif [[ $param_key == "-rd" ]] || [[ $param_key == "--root-dir" ]]; then
         root_dir=$param_value;
-    elif [ $param_key == "-sa" ] || [ $param_key == "--server-admin" ]; then
+    elif [[ $param_key == "-sa" ]] || [[ $param_key == "--server-admin" ]]; then
         server_admin=$param_value;
-    elif [ $param_key == "-cf" ] || [ $param_key == "--cert-file" ]; then
+    elif [[ $param_key == "-cf" ]] || [[ $param_key == "--cert-file" ]]; then
         cert_file=$param_value;
-    elif [ $param_key == "-ck" ] || [ $param_key == "--cert-key" ]; then
+    elif [[ $param_key == "-ck" ]] || [[ $param_key == "--cert-key" ]]; then
         cert_key=$param_value;
-    elif [ $param_key == "-a" ] || [ $param_key == "--add" ]; then
+    elif [[ $param_key == "-a" ]] || [[ $param_key == "--add" ]]; then
         mode="add";
-    elif [ $param_key == "-r" ] || [ $param_key == "--remove" ]; then
+    elif [[ $param_key == "-r" ]] || [[ $param_key == "--remove" ]]; then
         mode="remove";
-    elif [ $param_key == "-s" ] || [ $param_key == "--ssl" ]; then
+    elif [[ $param_key == "-s" ]] || [[ $param_key == "--ssl" ]]; then
         enable_ssl="yes";
-    elif [ $param_key == "-i" ] || [ $param_key == "--interactive" ]; then
+    elif [[ $param_key == "-i" ]] || [[ $param_key == "--interactive" ]]; then
         interactive_mode="yes";
-    elif [ $param_key == "-v" ] || [ $param_key == "--verbose" ]; then
+    elif [[ $param_key == "-v" ]] || [[ $param_key == "--verbose" ]]; then
         verbose_mode="yes";
-    elif [ $param_key == "-l" ] || [ $param_key == "--list" ]; then
+    elif [[ $param_key == "-l" ]] || [[ $param_key == "--list" ]]; then
         list_domains="yes";
-    elif [ $param_key == "-h" ] || [ $param_key == "--help" ]; then
+    elif [[ $param_key == "-h" ]] || [[ $param_key == "--help" ]]; then
         display_help="yes";
-    elif [ $param_key == "--version" ]; then
+    elif [[ $param_key == "--version" ]]; then
         display_version="yes";
     fi
     
