@@ -30,10 +30,20 @@
 # OTHER DEALINGS IN THE SOFTWARE.                                 #
 ###################################################################
 
+##################
+# CORE VARIABLES #
+##################
+
+domain_regex="^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)+(.*)$";
+
 #########
 # LOGIC #
 #########
 
-echo "NO!";
+echo -e "Available local domains are:";
+
+echo -e;
+
+cat "/etc/hosts" | grep -P $domain_regex;
 
 exit;
