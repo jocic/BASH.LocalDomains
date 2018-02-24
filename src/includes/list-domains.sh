@@ -35,14 +35,50 @@
 ##################
 
 domain_regex="^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)+(.*)$";
+raw_data="";
 
-#########
-# LOGIC #
-#########
+###################
+# OTHER VARIABLES #
+###################
+
+loop_index=0;
+temp="";
+domains_array=();
+addresses_array=();
+
+########################
+# STEP 1 - GATHER DATA #
+########################
+
+# Get Data.
+
+raw_data=$(cat "/etc/hosts");
+
+# Parse Domains.
+
+domains_array=$(grep "^127." <<< $raw_data | sed -r "s/^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)//g");
+
+readarray domains_array <<< $domains_array;
+
+# Parse Addresses.
+
+addresses_array=$(grep "^127." <<< $raw_data | sed -r "s/(\t)+(.*)$//g");
+
+readarray addresses_array <<< $addresses_array;
+
+#######################
+# STEP 2 - PRINT DATA #
+#######################
 
 echo -e "Available local domains are:";
 echo -e;
 
-cat "/etc/hosts" | grep -P $domain_regex;
+for loop_index in "${!domains_array[@]}"
+do
+    domains_array[$loop_index]=$(echo ${domains_array[loop_index]} | sed -r "s/\n//g");
+    addresses_array[$loop_index]=$(echo ${addresses_array[loop_index]} | sed -r "s/\n//g");
+    
+    echo -e "$(($loop_index + 1)). ${domains_array[loop_index]} - ${addresses_array[loop_index]}";
+done
 
 exit;

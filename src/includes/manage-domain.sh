@@ -133,7 +133,7 @@ if [[ -z $domain ]]; then
         
         # Print Domains
         
-        available_domains=$(source "$source_dir/includes/list-domains.sh" | grep "^127." | sed -r "s/^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)//g");
+        available_domains=$(cat "/etc/hosts" | grep "^127." | sed -r "s/^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)//g");
         
         readarray available_domains <<< $available_domains;
         
