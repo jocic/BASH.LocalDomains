@@ -47,7 +47,7 @@ config_filename_pattern="[^a-zA-Z0-9]";
 # OTHER VARIABLES #
 ###################
 
-hosts_line="";
+domain_regex="";
 
 #####################################
 # STEP 1 - GENERATE CONFIG FILENAME #
@@ -79,10 +79,11 @@ if [ $verbose_mode == "yes" ]; then
 fi
 
 hosts_data=$(cat "/etc/hosts");
-hosts_line="127.0.1.1	$domain";
 
-hosts_data="${hosts_data//$hosts_line/}"; # Remove Desired Line
-hosts_data="${hosts_data//\n$hosts_line/}"; # Remove Desired Line
+domain_regex="^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)+($domain)$";
+
+hosts_data=$(sed -r "s/$domain_regex/{new-line-workaround}/" <<< $hosts_data); # Prevent Duplicate Lines
+hosts_data=$(sed -z "s/{new-line-workaround}\n//g" <<< $hosts_data); # Remove New Line (SED Workaround)
 
 echo "$hosts_data" > "/etc/hosts";
 

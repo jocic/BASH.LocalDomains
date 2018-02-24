@@ -51,10 +51,7 @@ Apache configuration files and domain will be removed, but the directory **/var/
 ## Example 4 - Removing (Interactive Mode)
 
 
-
-## Parameters
-
-
+Apache configuration files and domain will be removed, but the directory **/var/www/html/my-cool-server** will remain unaffected.
 
 ## Notes
 

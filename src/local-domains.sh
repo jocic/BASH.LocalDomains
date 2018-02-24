@@ -59,6 +59,10 @@ elif [ $display_version == "yes" ]; then
     
     source "$source_dir/includes/show-version.sh";
     
+elif [ $list_domains == "yes" ]; then
+    
+    source "$source_dir/includes/list-domains.sh";
+    
 else
     
     ##############################
@@ -87,8 +91,22 @@ else
         
     fi
     
+    #############################
+    # STEP 3 - CHECK IP ADDRESS #
+    #############################
+    
+    temp=$(echo $ip_address | grep -P "^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})$");
+    
+    if [ -z $temp ]; then
+        
+        echo "Error: Invalid IP address provided, it must be a part of the 127.0.0.0/8 address block.";
+        
+        exit;
+        
+    fi
+    
     #################################
-    # STEP 3 - ASK FOR CONFIRMATION #
+    # STEP 4 - ASK FOR CONFIRMATION #
     #################################
     
     source "$source_dir/includes/show-parameters.sh";
@@ -98,7 +116,7 @@ else
     read -p "Continue? (y/n) - " -n 1 temp;
     
     ###########################
-    # STEP 4 - PROCESS DOMAIN #
+    # STEP 5 - PROCESS DOMAIN #
     ###########################
     
     echo -e "\n";

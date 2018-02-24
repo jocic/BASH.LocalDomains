@@ -35,6 +35,7 @@
 #########
 
 echo "Domain:          $domain";
+echo "IP Address:      $ip_address";
 echo "Root Dir:        $root_dir";
 echo "Server Admin:    $server_admin";
 echo "Mode:            $mode";
