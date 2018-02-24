@@ -35,15 +35,15 @@
 #######################
 
 domain="";
-ip_address="127.0.0.1";
-interactive="no";
-mode="add";
-root_dir="/var/www/html";
-server_admin="webmaster@localhost";
-cert_file="/etc/apache2/ssl/dummy-ssl.crt";
-cert_key="/etc/apache2/ssl/dummy-ssl.key";
-enable_ssl="no";
-verbose_mode="no";
+ip_address="";
+mode="";
+root_dir="";
+cert_file="";
+cert_key="";
+server_admin="";
+enable_ssl="";
+interactive_mode="no";
+verbose_mode="";
 list_domains="no";
 display_help="no";
 display_version="no";
@@ -85,14 +85,14 @@ while :
         cert_file=$param_value;
     elif [ $param_key == "-ck" ] || [ $param_key == "--cert-key" ]; then
         cert_key=$param_value;
-    elif [ $param_key == "-i" ] || [ $param_key == "--interactive" ]; then
-        interactive="yes";
     elif [ $param_key == "-a" ] || [ $param_key == "--add" ]; then
         mode="add";
     elif [ $param_key == "-r" ] || [ $param_key == "--remove" ]; then
         mode="remove";
     elif [ $param_key == "-s" ] || [ $param_key == "--ssl" ]; then
         enable_ssl="yes";
+    elif [ $param_key == "-i" ] || [ $param_key == "--interactive" ]; then
+        interactive_mode="yes";
     elif [ $param_key == "-v" ] || [ $param_key == "--verbose" ]; then
         verbose_mode="yes";
     elif [ $param_key == "-l" ] || [ $param_key == "--list" ]; then

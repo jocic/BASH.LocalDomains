@@ -48,8 +48,8 @@ temp="";
 #########
 
 source "$source_dir/includes/check-dependencies.sh";
-
 source "$source_dir/includes/process-parameters.sh";
+source "$source_dir/includes/add-check-functions.sh";
 
 if [ $display_help == "yes" ]; then
     
@@ -69,7 +69,7 @@ else
     # STEP 1 - CHECK PRICILEDGES #
     ##############################
     
-    if [ "$(id -u)" != "0" ]; then
+    if [ $(is_root_user) == "no" ]; then
         
         echo "Error: Local Domains must be ran with root priviledges.";
         
@@ -77,33 +77,99 @@ else
         
     fi
     
-    ##############################
-    # STEP 2 - CHECK DOMAIN NAME #
-    ##############################
+    #############################################
+    # STEP 2 - GATHER OR SET DEFAULT PARAMETERS #
+    #############################################
     
-    temp=$(echo $domain | grep -P '(?=^.{5,254}$)(^(?:(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)');
+    if [ $interactive_mode == "yes" ]; then
+        
+        source "$source_dir/includes/manage-domain.sh";
+        
+    else
+        
+        if [ -z $ip_address ]; then
+            ip_address="127.0.0.1";
+        fi
+        
+        if [ -z $root_dir ]; then
+            root_dir="/var/www/html";
+        fi
+        
+        if [ -z $server_admin ]; then
+            server_admin="webmaster@localhost";
+        fi
+        
+        if [ -z $enable_ssl ]; then
+            enable_ssl="no";
+        fi
+        
+        if [ -z $cert_file ]; then
+            cert_file="/etc/apache2/ssl/dummy-ssl.crt";
+        fi
+        
+        if [ -z $cert_key ]; then
+            cert_key="/etc/apache2/ssl/dummy-ssl.key";
+        fi
+        
+        if [ -z $verbose_mode ]; then
+            verbose_mode="no";
+        fi
+        
+    fi
     
-    if [ -z $temp ]; then
+    #############################
+    # STEP 3 - CHECK PARAMETERS #
+    #############################
+    
+    # Check Mode.
+    
+    if [ -z $mode ]; then
+        
+        echo "Error: You haven't selected a mode.";
+        
+        exit;
+        
+    fi
+    
+    # Check Domain.
+    
+    if [ $(is_valid_domain $domain) == "no" ]; then
         
         echo "Error: Invalid domain name provided.";
         
         exit;
         
-    fi
+    fi;
     
-    #############################
-    # STEP 3 - CHECK IP ADDRESS #
-    #############################
+    # Check IP Address.
     
-    temp=$(echo $ip_address | grep -P "^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})$");
-    
-    if [ -z $temp ]; then
+    if [ $mode == "add" ] && [ $(is_valid_ip_address $ip_address) == "no" ]; then
         
-        echo "Error: Invalid IP address provided, it must be a part of the 127.0.0.0/8 address block.";
+        echo "Error: Invalid domain name provided.";
         
         exit;
         
-    fi
+    fi;
+    
+    # Check Root Directory.
+    
+    if [ $mode == "add" ] && [ $(is_valid_directory $root_dir) == "no" ]; then
+        
+        echo "Error: Invalid root directory provided. It doesn't exist.";
+        
+        exit;
+        
+    fi;
+    
+    # Check Server Admin.
+    
+    if [ $mode == "add" ] && [ $(is_valid_email_address $server_admin) == "no" ]; then
+        
+        echo "Error: Invalid email address for server admin provided.";
+        
+        exit;
+        
+    fi;
     
     #################################
     # STEP 4 - ASK FOR CONFIRMATION #
@@ -124,9 +190,19 @@ else
     if [[ $temp =~ ^[Yy]$ ]]; then
         
         if [ $mode == "add" ]; then
+            
             source "$source_dir/includes/add-domain.sh";
-        else
+            
+        elif [ $mode == "remove" ]; then
+            
             source "$source_dir/includes/remove-domain.sh";
+            
+        else
+            
+            echo -e "Invalid mode selected.";
+            
+            exit;
+            
         fi
         
     else

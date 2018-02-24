@@ -30,19 +30,98 @@
 # OTHER DEALINGS IN THE SOFTWARE.                                 #
 ###################################################################
 
-##################
-# CORE VARIABLES #
-##################
-
-domain_regex="^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)+(.*)$";
-
 #########
 # LOGIC #
 #########
 
-echo -e "Available local domains are:";
-echo -e;
+function is_root_user()
+{
+    # Logic.
+    
+    if [ "$(id -u)" == "0" ]; then
+        echo "yes";
+    else
+        echo "no";
+    fi
+}
 
-cat "/etc/hosts" | grep -P $domain_regex;
+function is_valid_domain()
+{
+    # Core Variables.
+    
+    temp="";
+    
+    # Logic.
+    
+    temp=$(echo $1 | grep -P '(?=^.{5,254}$)(^(?:(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)');
+    
+    if [ -z $temp ]; then
+        echo "no";
+    else
+        echo "yes";
+    fi
+}
 
-exit;
+function is_valid_email_address()
+{
+    # Core Variables.
+    
+    temp="";
+    
+    # Logic.
+    
+    temp=$(echo $1 | grep -P "^([A-Za-z0-9._%+-])+(@)+([A-Za-z0-9.-])+$");
+    
+    if [ -z $temp ]; then
+        echo "no";
+    else
+        echo "yes";
+    fi
+}
+
+function is_valid_ip_address()
+{
+    # Core Variables.
+    
+    temp="";
+    
+    # Logic.
+    
+    temp=$(echo $1 | grep -P "^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})$");
+    
+    if [ -z $temp ]; then
+        echo "no";
+    else
+        echo "yes";
+    fi
+}
+
+function is_valid_directory()
+{
+    # Core Variables.
+    
+    temp="";
+    
+    # Logic.
+    
+    if [ -d $1 ]; then
+        echo "yes";
+    else
+        echo "no";
+    fi
+}
+
+function is_valid_file()
+{
+    # Core Variables.
+    
+    temp="";
+    
+    # Logic.
+    
+    if [ -f $1 ]; then
+        echo "yes";
+    else
+        echo "no";
+    fi
+}

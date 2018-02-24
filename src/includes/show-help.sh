@@ -46,12 +46,12 @@ echo "  -d {domain}, --domain {domain}                       Domain that needs t
 echo "  -ip {ip_address}, --ip-address {ip_address}          IP address that should be assigned to the domains.";
 echo "  -rd {root_dir}, --root-dir {root_dir}                Root directory of a domain.";
 echo "  -sa {server_admin}, --server-admin {server_admin}    Server admin's email address";
-echo "  -cf {cert_file}, --cert-file {cert_file}             Ceritification file location.";
-echo "  -ck {cert_key}, --cert-key {cert_key}                Ceritification key location.";
-echo "  -i, --interactive                                    Interactive mode.";
+echo "  -cf {cert_file}, --cert-file {cert_file}             Certificate file location.";
+echo "  -ck {cert_key}, --cert-key {cert_key}                Certificate key location.";
 echo "  -a, --add                                            Select add mode.";
 echo "  -r, --remove                                         Select remove mode.";
 echo "  -s, --ssl                                            Enable SSL.";
+echo "  -i, --interactive                                    Select interactive mode.";
 echo "  -v, --verbose                                        Explain what is being done.";
 echo "  -l, --list                                           Lists all available domains.";
 echo "  -h, --help                                           Display this help and exit.";

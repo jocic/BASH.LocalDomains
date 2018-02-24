@@ -28,17 +28,13 @@ This script was made for Debian and Debian-based distributions with LAMP stack i
 In this example, we are adding a local domain **www.my-cool-server.test** with the root directory **/var/www/html/my-cool-server**.
 
 ```bash
-bash ./local-domains.sh -d www.my-cool-server.test -rd /var/www/html/my-cool-server -v
+bash ./local-domains.sh -d www.my-cool-server.test -rd /var/www/html/my-cool-server -v -a
 ```
 Directory **/var/www/html/my-cool-server** will be created if it doesn't already exist.
 
 You can now access **www.my-cool-server.test** from your network.
 
-## Example 2 - Adding (Interactive Mode)
-
-
-
-## Example 3 - Removing
+## Example 2 - Removing
 
 In this example, we are removing a local domain **www.my-cool-server.test**.
 
@@ -48,10 +44,15 @@ bash ./local-domains.sh -d www.my-cool-server.test -rd /var/www/html/my-cool-ser
 
 Apache configuration files and domain will be removed, but the directory **/var/www/html/my-cool-server** will remain unaffected.
 
-## Example 4 - Removing (Interactive Mode)
+## Example 3 - Interactive Mode
 
+Interactive mode has been added to simplify usage of the script. It's an easy way to manage your domains.
 
-Apache configuration files and domain will be removed, but the directory **/var/www/html/my-cool-server** will remain unaffected.
+```bash
+bash ./local-domains.sh -i
+```
+
+Parameter for the interactive mode can be combined with other parameters to skip unwanted steps.
 
 ## Notes
 
