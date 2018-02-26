@@ -41,8 +41,9 @@ cert_file="";
 cert_key="";
 server_admin="";
 enable_ssl="";
-interactive_mode="no";
+purge="";
 verbose_mode="";
+interactive_mode="no";
 list_domains="no";
 display_help="no";
 display_version="no";
@@ -90,10 +91,12 @@ while :
         mode="remove";
     elif [[ $param_key == "-s" ]] || [[ $param_key == "--ssl" ]]; then
         enable_ssl="yes";
-    elif [[ $param_key == "-i" ]] || [[ $param_key == "--interactive" ]]; then
-        interactive_mode="yes";
+    elif [[ $param_key == "-p" ]] || [[ $param_key == "--purge" ]]; then
+        purge="yes";
     elif [[ $param_key == "-v" ]] || [[ $param_key == "--verbose" ]]; then
         verbose_mode="yes";
+    elif [[ $param_key == "-i" ]] || [[ $param_key == "--interactive" ]]; then
+        interactive_mode="yes";
     elif [[ $param_key == "-l" ]] || [[ $param_key == "--list" ]]; then
         list_domains="yes";
     elif [[ $param_key == "-h" ]] || [[ $param_key == "--help" ]]; then

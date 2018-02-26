@@ -54,10 +54,26 @@ bash ./local-domains.sh -i
 
 Parameter for the interactive mode can be combined with other parameters to skip unwanted steps.
 
+## Example 4 - Purging Root Directory
+
+Root directory of a domain can easily be purged, but tread lightly, as all files and folders will be permanently removed from it.
+
+### When Adding
+
+```bash
+bash ./local-domains.sh -d www.my-cool-server.test -rd /var/www/html/my-cool-server -v -a -p
+```
+
+### When Removing
+
+```bash
+bash ./local-domains.sh -d www.my-cool-server.test -v -r -p
+```
+
 ## Notes
 
 - Enabling SSL is easy, just pass the **-s** or **--ssl** parameter when adding a domain
-- Removing a domain will not remove the files from the specified root directory, you will have to do that manually
+- Removing a domain will not remove the files from the specified root directory unless you pass the **-p** parameter
 
 If you plan to use this script everyday, you should probably create an alias.
 
@@ -70,6 +86,10 @@ alias local-domains="/path/to/your/folder/local-domains.sh"
 ### Permanent Alias
 
 ```bash
+echo alias local-domains="/path/to/your/folder/local-domains.sh" >> ~/.bash_aliases
+```
+
+If you have any questions, please don't hessitate to contact me.
 echo alias local-domains="/path/to/your/folder/local-domains.sh" >> ~/.bash_aliases
 ```
 

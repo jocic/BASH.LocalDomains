@@ -49,6 +49,7 @@ echo "  -cf {cert_file}, --cert-file {cert_file}             Certificate file lo
 echo "  -ck {cert_key}, --cert-key {cert_key}                Certificate key location.";
 echo "  -a, --add                                            Select add mode.";
 echo "  -r, --remove                                         Select remove mode.";
+echo "  -p, --purge                                          Purges root directory of a domain.";
 echo "  -s, --ssl                                            Enable SSL.";
 echo "  -i, --interactive                                    Select interactive mode.";
 echo "  -v, --verbose                                        Explain what is being done.";

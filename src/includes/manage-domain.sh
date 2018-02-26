@@ -348,7 +348,7 @@ if [[ -z $cert_file ]] && [[ $mode == "add" ]] && [[ $enable_ssl == "yes" ]]; th
         
         if [[ -z $temp ]]; then
             
-            cert_file="/etc/apache2/ssl/dummy-ssl.crt";
+            cert_file="$source_dir/templates/dummy-cert.crt";
             
         elif [[ $(is_valid_file $temp; echo $?) -eq 1 ]]; then
             
@@ -386,7 +386,7 @@ if [[ -z $cert_key ]] && [[ $mode == "add" ]] && [[ $enable_ssl == "yes" ]]; the
         
         if [[ -z $temp ]]; then
             
-            cert_key="/etc/apache2/ssl/dummy-ssl.key";
+            cert_key="$source_dir/templates/dummy-cert.key";
             
         elif [[ $(is_valid_file $temp; echo $?) -eq 1 ]]; then
             
@@ -403,9 +403,50 @@ if [[ -z $cert_key ]] && [[ $mode == "add" ]] && [[ $enable_ssl == "yes" ]]; the
     
 fi
 
-#########################
-# STEP 9 - VERBOSE MODE #
-#########################
+##################
+# STEP 9 - PURGE #
+##################
+
+if [[ -z $purge ]]; then
+    
+    # Print Title.
+    
+    echo -e "- Do you want to purge root directory of a domain?";
+    echo -e;
+    
+    # Process Input.
+    
+    while [[ -z $purge ]]
+    do
+        
+        read -p "Purge root directory (y/n) - " -n 1 temp;
+        echo -e;
+        
+        if [[ $temp =~ ^[Yy]$ ]]; then
+            
+            purge="yes";
+            
+        elif [[ $temp =~ ^[Nn]$ ]]; then
+            
+            purge="no";
+            
+        else
+            
+            echo -e;
+            echo -e "Invalid option selected.";
+            echo -e;
+            
+        fi
+        
+    done;
+    
+    echo -e;
+    
+fi
+
+##########################
+# STEP 10 - VERBOSE MODE #
+##########################
 
 if [[ -z $verbose_mode ]]; then
     

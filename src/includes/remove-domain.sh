@@ -35,6 +35,7 @@
 
 hosts_data="";
 filename_prefix="";
+apache_config="";
 
 #####################
 # PATTERN VARIABLES #
@@ -53,7 +54,7 @@ domain_regex="";
 #####################################
 
 if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Generating filename prefix for necessary files...";
+    echo -e "\n- Generating filename prefix for necessary files...";
 fi
 
 filename_prefix="${domain//$filename_prefix_pattern/_}";
@@ -65,6 +66,12 @@ filename_prefix="${domain//$filename_prefix_pattern/_}";
 if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Removing configuration files...";
 fi
+
+# Cache Configuration.
+
+apache_config=$(cat "/etc/apache2/sites-available/$filename_prefix.conf");
+
+# Remove Configuration Files.
 
 if [[ -f "/etc/apache2/sites-available/$filename_prefix.conf" ]]; then
     rm "/etc/apache2/sites-available/$filename_prefix.conf";
@@ -81,7 +88,7 @@ fi
 if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Removing certificate files...";
 fi
-echo "/etc/apache2/ssl/$filename_prefix.crt";
+
 if [[ -f "/etc/apache2/ssl/$filename_prefix.crt" ]]; then
     rm "/etc/apache2/ssl/$filename_prefix.crt";
 fi
@@ -107,8 +114,42 @@ hosts_data=$(sed -z "s/{new-line-workaround}\n//g" <<< $hosts_data); # Remove Ne
 
 echo "$hosts_data" > "/etc/hosts";
 
+#################################
+# STEP 5 - PURGE ROOT DIRECTORY #
+#################################
+
+if [[ $purge == "yes" ]]; then
+    
+    # Determine Directory.
+    
+    if [[ -z $root_dir ]]; then
+        root_dir=$(echo "$apache_config" | grep -oPZ "((?<=DocumentRoot))+(.*)" | xargs);
+    fi
+    
+    # Purge Directory.
+    
+    if [[ -d $root_dir ]]; then
+        
+        echo -e;
+        
+        read -p "Purge root directory \"$root_dir\"? (y/n) - " -n 1 temp;
+        
+        echo -e "\n";
+        
+        if [[ $temp =~ ^[Yy]$ ]]; then
+            find $root_dir -mindepth 1 -delete;
+        fi
+        
+    else
+        
+        echo -e "- Root directory purging has been skipped as the directory doesn't exist.";
+        
+    fi
+    
+fi
+
 ###########################
-# STEP 5 - RESTART APACHE #
+# STEP 6 - RESTART APACHE #
 ###########################
 
 if [[ $verbose_mode == "yes" ]]; then

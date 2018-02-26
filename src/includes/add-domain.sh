@@ -61,7 +61,7 @@ temp="";
 ###############################
 
 if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Loading apache configuration template...";
+    echo -e "\n- Loading apache configuration template...";
 fi
 
 if [[ $enable_ssl == "yes" ]]; then
@@ -207,8 +207,36 @@ hosts_data=$(sed -z "s/{new-line-workaround}\n//g" <<< $hosts_data); # Remove Ne
 
 echo -e "$hosts_data\n$domain_line" > "/etc/hosts";
 
+##################################
+# STEP 11 - PURGE ROOT DIRECTORY #
+##################################
+
+if [[ $purge == "yes" ]]; then
+    
+    # Purge Directory.
+    
+    if [[ -d $root_dir ]]; then
+        
+        echo -e;
+        
+        read -p "Purge root directory \"$root_dir\"? (y/n) - " -n 1 temp;
+        
+        echo -e "\n";
+        
+        if [[ $temp =~ ^[Yy]$ ]]; then
+            find $root_dir -mindepth 1 -delete;
+        fi
+        
+    else
+        
+        echo -e "- Root directory purging has been skipped as the directory doesn't exist.";
+        
+    fi
+    
+fi
+
 ############################
-# STEP 11 - RESTART APACHE #
+# STEP 12 - RESTART APACHE #
 ############################
 
 if [[ $verbose_mode == "yes" ]]; then

@@ -98,6 +98,8 @@ else
         
         [[ -z $cert_key ]] && cert_key="$source_dir/templates/dummy-cert.key";
         
+        [[ -z $purge ]] && purge="no";
+        
         [[ -z $verbose_mode ]] && verbose_mode="no";
         
     fi

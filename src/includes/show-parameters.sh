@@ -39,6 +39,7 @@ if [[ $mode == "add" ]]; then
     echo "IP Address:      $ip_address";
     echo "Root Dir:        $root_dir";
     echo "Server Admin:    $server_admin";
+    echo "Purge:           $purge";
     echo "Mode:            $mode";
     echo "Enable SSL:      $enable_ssl";
     
@@ -54,6 +55,7 @@ if [[ $mode == "add" ]]; then
 else
     
     echo "Domain:          $domain";
+    echo "Purge:           $purge";
     echo "Mode:            $mode";
     echo "Verbose Mode:    $verbose_mode";
     
