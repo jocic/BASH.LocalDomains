@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.1.1                                           #
+# Script Version: 1.1.2                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -35,7 +35,7 @@
 ##################
 
 source_dir="$(cd "$( dirname "${BASH_SOURCE[0]}")" && pwd)"
-version="1.1.1";
+version="1.1.2";
 
 ###################
 # OTHER VARIABLES #
@@ -95,9 +95,9 @@ else
         
         [[ -z $enable_ssl ]] && enable_ssl="no";
         
-        [[ -z $cert_file ]] && cert_file="/etc/apache2/ssl/dummy-ssl.crt";
+        [[ -z $cert_file ]] && cert_file="$source_dir/templates/dummy-cert.crt";
         
-        [[ -z $cert_key ]] && cert_key="/etc/apache2/ssl/dummy-ssl.key";
+        [[ -z $cert_key ]] && cert_key="$source_dir/templates/dummy-cert.key";
         
         [[ -z $verbose_mode ]] && verbose_mode="no";
         

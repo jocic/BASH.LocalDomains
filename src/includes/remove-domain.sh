@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.1.1                                           #
+# Script Version: 1.1.2                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -35,13 +35,13 @@
 ##################
 
 hosts_data="";
-config_filename="";
+filename_prefix="";
 
 #####################
 # PATTERN VARIABLES #
 #####################
 
-config_filename_pattern="[^a-zA-Z0-9]";
+filename_prefix_pattern="[^a-zA-Z0-9]"; # For Some Reason [A-z] Does Not Work
 
 ###################
 # OTHER VARIABLES #
@@ -54,29 +54,45 @@ domain_regex="";
 #####################################
 
 if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Generating apache configuration filename...";
+    echo -e "- Generating filename prefix for necessary files...";
 fi
 
-config_filename="${domain//$config_filename_pattern/_}.conf";
+filename_prefix="${domain//$filename_prefix_pattern/_}";
 
-################################
-# STEP 2 - REMOVE CONFIG FILES #
-################################
+#######################################
+# STEP 2 - REMOVE CONFIGURATION FILES #
+#######################################
 
 if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Removing apache configuration...";
+    echo -e "- Removing configuration files...";
 fi
 
-if [[ -f "/etc/apache2/sites-available/$config_filename" ]]; then
-    rm "/etc/apache2/sites-available/$config_filename";
+if [[ -f "/etc/apache2/sites-available/$filename_prefix.conf" ]]; then
+    rm "/etc/apache2/sites-available/$filename_prefix.conf";
 fi
 
-if [[ -f "/etc/apache2/sites-enabled/$config_filename" ]]; then
-    rm "/etc/apache2/sites-enabled/$config_filename";
+if [[ -f "/etc/apache2/sites-enabled/$filename_prefix.conf" ]]; then
+    rm "/etc/apache2/sites-enabled/$filename_prefix.conf";
+fi
+
+#####################################
+# STEP 3 - REMOVE CERTIFICATE FILES #
+#####################################
+
+if [[ $verbose_mode == "yes" ]]; then
+    echo -e "- Removing certificate files...";
+fi
+echo "/etc/apache2/ssl/$filename_prefix.crt";
+if [[ -f "/etc/apache2/ssl/$filename_prefix.crt" ]]; then
+    rm "/etc/apache2/ssl/$filename_prefix.crt";
+fi
+
+if [[ -f "/etc/apache2/ssl/$filename_prefix.key" ]]; then
+    rm "/etc/apache2/ssl/$filename_prefix.key";
 fi
 
 #########################
-# STEP 3 - ADD HOSTNAME #
+# STEP 4 - ADD HOSTNAME #
 #########################
 
 if [[ $verbose_mode == "yes" ]]; then
@@ -93,7 +109,7 @@ hosts_data=$(sed -z "s/{new-line-workaround}\n//g" <<< $hosts_data); # Remove Ne
 echo "$hosts_data" > "/etc/hosts";
 
 ###########################
-# STEP 4 - RESTART APACHE #
+# STEP 5 - RESTART APACHE #
 ###########################
 
 if [[ $verbose_mode == "yes" ]]; then

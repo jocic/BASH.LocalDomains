@@ -3,7 +3,7 @@
 ###################################################################
 # Script Author: Djordje Jocic                                    #
 # Script Year: 2018                                               #
-# Script Version: 1.1.1                                           #
+# Script Version: 1.1.2                                           #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -36,7 +36,7 @@
 
 hosts_data="";
 apache_config="";
-config_filename="";
+filename_prefix="";
 
 #####################
 # PATTERN VARIABLES #
@@ -47,13 +47,12 @@ root_dir_pattern="{{ root_dir }}";
 server_admin_pattern="{{ server_admin }}";
 cert_file_pattern="{{ cert_file }}";
 cert_key_pattern="{{ cert_key }}";
-config_filename_pattern="[^a-zA-Z0-9]"; # For Some Reason [A-z] Does Not Work
+filename_prefix_pattern="[^a-zA-Z0-9]"; # For Some Reason [A-z] Does Not Work
 
 ###################
 # OTHER VARIABLES #
 ###################
 
-cert_folder="";
 domain_line="";
 domain_regex="";
 temp="";
@@ -91,56 +90,48 @@ apache_config="${apache_config//$cert_key_pattern/$cert_key}";
 #####################################
 
 if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Generating apache configuration filename...";
+    echo -e "- Generating filename prefix for necessary files...";
 fi
 
-config_filename="${domain//$config_filename_pattern/_}.conf";
+filename_prefix="${domain//$filename_prefix_pattern/_}";
 
-##############################
-# STEP 4 - SAVE CONFIG FILES #
-##############################
+####################################
+# STEP 4 - ADD CONFIGURATION FILES #
+####################################
 
 if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Saving apache configuration...";
 fi
 
-echo "$apache_config" > "/etc/apache2/sites-available/$config_filename";
-echo "$apache_config" > "/etc/apache2/sites-enabled/$config_filename";
+echo "$apache_config" > "/etc/apache2/sites-available/$filename_prefix.conf";
+echo "$apache_config" > "/etc/apache2/sites-enabled/$filename_prefix.conf";
 
-####################################
-# STEP 5 - CREATE CERT DIRECTORIES #
-####################################
+######################################
+# STEP 5 - CREATE CERTIFICATE FOLDER #
+######################################
 
 if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Creating SSL directories (if they don't exist)...";
+    echo -e "- Creating SSL directory (if it doesn't exist)...";
 fi
 
-cert_folder=$(dirname "$cert_file");
-
-if [[ ! -d $cert_folder ]]; then
-  mkdir -p -m 700 $cert_folder
+if [[ ! -d "/etc/apache2/ssl" ]]; then
+  mkdir -p -m 700 "/etc/apache2/ssl";
 fi
 
-cert_folder=$(dirname "$cert_key");
-
-if [[ ! -d $cert_folder ]]; then
-  mkdir -p -m 700 $cert_folder
-fi
-
-###################################
-# STEP 6 - ADD DUMMY CERTIFICATES #
-###################################
+##################################
+# STEP 6 - ADD CERTIFICATE FILES #
+##################################
 
 if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Adding dummy SSL certificates...";
 fi
 
 if [ ! -z $cert_file ]; then
-    cp "$source_dir/templates/dummy-cert.crt" $cert_file;
+    cp $cert_file "/etc/apache2/ssl/$filename_prefix.crt";
 fi
 
 if [ ! -z $cert_key ]; then
-    cp "$source_dir/templates/dummy-cert.key" $cert_key;
+    cp $cert_key "/etc/apache2/ssl/$filename_prefix.key";
 fi
 
 ##################################
