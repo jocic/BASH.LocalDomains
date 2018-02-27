@@ -89,7 +89,7 @@ alias local-domains="/path/to/your/folder/local-domains.sh"
 echo alias local-domains="/path/to/your/folder/local-domains.sh" >> ~/.bash_aliases
 ```
 
-If you have any questions, please don't hessitate to contact me.
+```bash
 echo alias local-domains="/path/to/your/folder/local-domains.sh" >> ~/.bash_aliases
 ```
 

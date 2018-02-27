@@ -34,7 +34,7 @@
 ##################
 
 source_dir="$(cd "$( dirname "${BASH_SOURCE[0]}")" && pwd)"
-version="1.1.2";
+version="1.1.3";
 
 ###################
 # OTHER VARIABLES #

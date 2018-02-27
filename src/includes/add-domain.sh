@@ -70,8 +70,18 @@ else
     apache_config=$(cat "$source_dir/templates/without-ssl.conf");
 fi
 
+#####################################
+# STEP 2 - GENERATE CONFIG FILENAME #
+#####################################
+
+if [[ $verbose_mode == "yes" ]]; then
+    echo -e "- Generating filename prefix for necessary files...";
+fi
+
+filename_prefix="${domain//$filename_prefix_pattern/_}";
+
 ##################################
-# STEP 2 - PROCESS APACHE CONFIG #
+# STEP 3 - PROCESS APACHE CONFIG #
 ##################################
 
 if [[ $verbose_mode == "yes" ]]; then
@@ -81,18 +91,8 @@ fi
 apache_config="${apache_config//$domain_pattern/$domain}";
 apache_config="${apache_config//$root_dir_pattern/$root_dir}";
 apache_config="${apache_config//$server_admin_pattern/$server_admin}";
-apache_config="${apache_config//$cert_file_pattern/$cert_file}";
-apache_config="${apache_config//$cert_key_pattern/$cert_key}";
-
-#####################################
-# STEP 3 - GENERATE CONFIG FILENAME #
-#####################################
-
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Generating filename prefix for necessary files...";
-fi
-
-filename_prefix="${domain//$filename_prefix_pattern/_}";
+apache_config="${apache_config//$cert_file_pattern/\/etc\/apache2\/ssl\/$filename_prefix.crt}";
+apache_config="${apache_config//$cert_key_pattern/\/etc\/apache2\/ssl\/$filename_prefix.key}";
 
 ####################################
 # STEP 4 - ADD CONFIGURATION FILES #
@@ -125,13 +125,9 @@ if [[ $verbose_mode == "yes" ]]; then
     echo -e "- Adding dummy SSL certificates...";
 fi
 
-if [ ! -z $cert_file ]; then
-    cp $cert_file "/etc/apache2/ssl/$filename_prefix.crt";
-fi
+cp $cert_file "/etc/apache2/ssl/$filename_prefix.crt";
 
-if [ ! -z $cert_key ]; then
-    cp $cert_key "/etc/apache2/ssl/$filename_prefix.key";
-fi
+cp $cert_key "/etc/apache2/ssl/$filename_prefix.key";
 
 ##################################
 # STEP 7 - CREATE ROOT DIRECTORY #
