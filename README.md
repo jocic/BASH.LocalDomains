@@ -89,8 +89,29 @@ alias local-domains="/path/to/your/folder/local-domains.sh"
 echo alias local-domains="/path/to/your/folder/local-domains.sh" >> ~/.bash_aliases
 ```
 
+## Installation
+
+Alternatively, you can add my personal APT repository to your machine and install **LocalDomains** like you would anything else.
+
+Add a repository.
+
 ```bash
-echo alias local-domains="/path/to/your/folder/local-domains.sh" >> ~/.bash_aliases
+wget -nc https://www.djordjejocic.com/files/apt/Release.key
+sudo apt-key add Release.key
+sudo echo "deb http://apt.djordjejocic.com general main" >> "/etc/apt/sources.list"
+sudo apt-get update
 ```
 
-If you have any questions, please don't hessitate to contact me.
+Install project.
+
+```bash
+apt-get install local-domains
+```
+
+## Support
+
+Please don't hessitate to contact me if you have any questions, ideas, or concerns.
+
+My Twitter account is: [@jocic_91](https://www.twitter.com)
+
+My support E-Mail address is: <support@djordjejocic.com>
