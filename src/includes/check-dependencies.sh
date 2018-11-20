@@ -29,26 +29,37 @@
 # OTHER DEALINGS IN THE SOFTWARE.                                 #
 ###################################################################
 
-############################
-# STEP 1 - SERVICE COMMAND #
-############################
+##################
+# CORE VARIABLES #
+##################
 
-if [[ -z "$(command -v service)" ]]; then
-    
-    echo "Error: Command \"service\" is missing. Please install it by typing \"apt-get install service\".";
-    
-    exit;
-    
-fi;
+deps_commands=("service" "apache2");
+deps_packages=("sysvinit-utils" "apache2");
 
-############################
-# STEP 2 - APACHE2 COMMAND #
-############################
+#########
+# LOGIC #
+#########
 
-if [[ -z "$(command -v apache2)" ]]; then
+if [[ ${#deps_commands[@]} == ${#deps_packages[@]} ]]; then
     
-    echo "Error: Command \"apache2\" is missing. Please install it by typing \"apt-get install apache2\".";
+    for i in "${!deps_commands[@]}"; do
+        
+        if [[ -z "$(command -v ${deps_commands[$i]})" ]]; then
+            
+            if [[ ! -z "$(command -v apt-get)" ]]; then
+                echo -e "Error: Command \"${deps_commands[$i]}\" is missing. Please install the dependency by typing \"apt-get install ${deps_packages[$i]}\"." && exit;
+            elif [[ ! -z "$(command -v yum)" ]]; then
+                echo -e "Error: Command \"${deps_commands[$i]}\" is missing. Please install the dependency by typing \"yum install ${deps_packages[$i]}\"." && exit;
+            else
+                echo -e "Error: Command \"${deps_commands[$i]}\" is missing. Please install \"${deps_packages[$i]}\"." && exit;
+            fi
+            
+        fi
+        
+    done
     
-    exit;
+else
     
-fi;
+    echo -e "Error: Dependency command count doesn't correspond to it's package counterpart." && exit;
+    
+fi

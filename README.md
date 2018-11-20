@@ -6,8 +6,8 @@ Local Domains is a simple BASH script for creating local domains on Debian and D
 
 Script has been tested on the following distributions:
 
-* Ubuntu 17.10.1
-* Debian 9.3
+* Ubuntu 17.10 - 18.04
+* Debian 9.3 - 9.5
 
 [![Buy Me Coffee](assets/img/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
 

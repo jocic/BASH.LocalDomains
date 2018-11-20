@@ -72,12 +72,13 @@ readarray addresses_array <<< $addresses_array;
 echo -e "Available local domains are:";
 echo -e;
 
-for loop_index in "${!domains_array[@]}"
-do
+for loop_index in "${!domains_array[@]}"; do
+    
     domains_array[$loop_index]=$(echo ${domains_array[loop_index]} | sed -r "s/\n//g");
     addresses_array[$loop_index]=$(echo ${addresses_array[loop_index]} | sed -r "s/\n//g");
     
     echo -e "$(($loop_index + 1)). ${domains_array[loop_index]} - ${addresses_array[loop_index]}";
+    
 done
 
 exit;

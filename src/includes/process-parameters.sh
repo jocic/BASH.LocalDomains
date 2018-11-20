@@ -61,8 +61,7 @@ next_param=2;
 # LOGIC #
 #########
 
-while :
-  do
+while [[ 1 == 1 ]]; do
     
     #############################
     # STEP 1 - CHECK PARAMETERS #

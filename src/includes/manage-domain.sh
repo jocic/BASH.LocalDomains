@@ -55,8 +55,7 @@ if [[ -z $mode ]]; then
     
     # Process Input.
     
-    while [ -z $mode ]
-    do
+    while [ -z $mode ]; do
         
         read -p "Option (1/2) - " -n 1 temp;
         echo -e;
@@ -100,8 +99,7 @@ if [[ -z $domain ]]; then
         
         # Process Input.
         
-        while [[ -z $domain ]]
-        do
+        while [[ -z $domain ]]; do
             
             read -p "Domain (ex. www.my-domain.com) - " temp;
             echo -e;
@@ -147,8 +145,7 @@ if [[ -z $domain ]]; then
         
         # Process Input.
         
-        while [[ -z $domain ]]
-        do
+        while [[ -z $domain ]]; do
             
             read -p "Domain index - " temp;
             echo -e;
@@ -185,8 +182,7 @@ if [[ -z $ip_address ]] && [[ $mode == "add" ]]; then
     
     # Process Input.
     
-    while [[ -z $ip_address ]]
-    do
+    while [[ -z $ip_address ]]; do
         
         read -p "IP address (ex. 127.0.0.1) - " temp;
         echo -e;
@@ -223,8 +219,7 @@ if [[ -z $root_dir ]] && [[ $mode == "add" ]]; then
     
     # Process Input.
     
-    while [[ -z $root_dir ]]
-    do
+    while [[ -z $root_dir ]]; do
         
         read -p "Root directory (ex. /var/www/html) - " temp;
         echo -e;
@@ -261,8 +256,7 @@ if [[ -z $server_admin ]] && [[ $mode == "add" ]]; then
     
     # Process Input.
     
-    while [[ -z $server_admin ]]
-    do
+    while [[ -z $server_admin ]]; do
         
         read -p "Server admin (ex. admin@my-domain.com) - " temp;
         echo -e;
@@ -299,8 +293,7 @@ if [[ -z $enable_ssl ]] && [[ $mode == "add" ]]; then
     
     # Process Input.
     
-    while [[ -z $enable_ssl ]]
-    do
+    while [[ -z $enable_ssl ]]; do
         
         read -p "Enable SSL (y/n) - " -n 1 temp;
         echo -e;
@@ -340,8 +333,7 @@ if [[ -z $cert_file ]] && [[ $mode == "add" ]] && [[ $enable_ssl == "yes" ]]; th
     
     # Process Input.
     
-    while [[ -z $cert_file ]]
-    do
+    while [[ -z $cert_file ]]; do
         
         read -p "Certification file (ex. /etc/apache2/ssl/dummy-ssl.crt) - " temp;
         echo -e;
@@ -378,8 +370,7 @@ if [[ -z $cert_key ]] && [[ $mode == "add" ]] && [[ $enable_ssl == "yes" ]]; the
     
     # Process Input.
     
-    while [[ -z $cert_key ]]
-    do
+    while [[ -z $cert_key ]]; do
         
         read -p "Certification key (ex. /etc/apache2/ssl/dummy-ssl.key) - " temp;
         echo -e;
@@ -416,8 +407,7 @@ if [[ -z $purge ]]; then
     
     # Process Input.
     
-    while [[ -z $purge ]]
-    do
+    while [[ -z $purge ]]; do
         
         read -p "Purge root directory (y/n) - " -n 1 temp;
         echo -e;
@@ -457,8 +447,7 @@ if [[ -z $verbose_mode ]]; then
     
     # Process Input.
     
-    while [[ -z $verbose_mode ]]
-    do
+    while [[ -z $verbose_mode ]]; do
         
         read -p "Enable verbose mode (y/n) - " -n 1 temp;
         echo -e;

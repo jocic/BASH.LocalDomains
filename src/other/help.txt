@@ -1,0 +1,24 @@
+Usage: local-domains {mode} {options}
+
+Adds a local domain and restarts apache.
+
+Available modes:
+
+  -a, --add         : Select add mode.
+  -r, --remove      : Select remove mode.
+  -i, --interactive : Select interactive mode.
+
+Available options:
+
+  -d,  --domain       : Domain that needs to be added or removed.
+  -ip, --ip-address   : IP address that should be assigned to the domains.
+  -rd, --root-dir     : Root directory of a domain.
+  -sa, --server-admin : Server admin's email address.
+  -cf, --cert-file    : Certificate file location.
+  -ck, --cert-key     : Certificate key location.
+  -p,  --purge        : Purges root directory of a domain.
+  -s,  --ssl          : Enable SSL.
+  -v,  --verbose      : Explain what is being done.
+  -l,  --list         : Lists all available domains.
+  -h,  --help         : Display this help and exit.
+       --version      : Output version information and exit.

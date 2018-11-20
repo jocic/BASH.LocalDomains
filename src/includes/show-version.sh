@@ -34,7 +34,5 @@
 #########
 
 echo -e "Local Domains $version";
-echo -e "Copyright (C) 2018 Djordje Jocic";
-echo -e "License MIT <http://opensource.org/licenses/MIT>";
 
-exit;
+cat "$source_dir/other/version.txt" && exit;

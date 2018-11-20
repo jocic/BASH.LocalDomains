@@ -33,6 +33,15 @@
 # LOGIC #
 #########
 
+# Checks if the user running the script has root privileges.
+# 
+# @author: Djordje Jocic <office@djordjejocic.com>
+# @copyright: 2018 MIT License (MIT)
+# @version: 1.0.0
+# 
+# @return integer
+#   Value <i>1</i> if the user has root privileges, and vice versa.
+
 function is_root_user()
 {
     # Logic.
@@ -42,65 +51,131 @@ function is_root_user()
     return 0;
 }
 
+# Checks if the domain is valid.
+# 
+# @author: Djordje Jocic <office@djordjejocic.com>
+# @copyright: 2018 MIT License (MIT)
+# @version: 1.0.0
+# 
+# @param string $domain
+#   Domain that should be checked.
+# @return integer
+#   Value <i>1</i> if the domain is valid, and vice versa.
+
 function is_valid_domain()
 {
     # Core Variables.
     
-    temp="";
+    domain=$1;
+    probe="";
     
     # Logic.
     
-    temp=$(echo $1 | grep -P '(?=^.{5,254}$)(^(?:(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)');
+    probe=$(echo $domain | grep -P '(?=^.{5,254}$)(^(?:(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)');
     
-    [[ -z $temp ]] && return 0;
+    [[ -z $probe ]] && return 0;
     
     return 1;
 }
+
+# Checks if the email address is valid.
+# 
+# @author: Djordje Jocic <office@djordjejocic.com>
+# @copyright: 2018 MIT License (MIT)
+# @version: 1.0.0
+# 
+# @param string $email_address
+#   Email address that should be checked.
+# @return integer
+#   Value <i>1</i> if the email address is valid, and vice versa.
 
 function is_valid_email_address()
 {
     # Core Variables.
     
-    temp="";
+    email_address=$1;
+    probe="";
     
     # Logic.
     
-    temp=$(echo $1 | grep -P "^([A-Za-z0-9._%+-])+(@)+([A-Za-z0-9.-])+$");
+    probe=$(echo $email_address | grep -P "^([A-Za-z0-9._%+-])+(@)+([A-Za-z0-9.-])+$");
     
-    [[ -z $temp ]] && return 0;
+    [[ -z $probe ]] && return 0;
     
     return 1;
 }
+
+# Checks if the IP address is valid.
+# 
+# @author: Djordje Jocic <office@djordjejocic.com>
+# @copyright: 2018 MIT License (MIT)
+# @version: 1.0.0
+# 
+# @param string $ip_address
+#   IP address that should be checked.
+# @return integer
+#   Value <i>1</i> if the IP address is valid, and vice versa.
 
 function is_valid_ip_address()
 {
     # Core Variables.
     
-    temp="";
+    ip_address=$1;
+    probe="";
     
     # Logic.
     
-    temp=$(echo $1 | grep -P "^(127\.)+([0-9]{1,3}\.)+([0-9]{1,3}\.)+([0-9]{1,3})$");
+    probe=$(echo $ip_address | grep -P "^(127\.)+([0-9]{1,3}\.)+([0-9]{1,3}\.)+([0-9]{1,3})$");
     
-    [[ -z $temp ]] && return 0;
+    [[ -z $probe ]] && return 0;
     
     return 1;
 }
 
+# Checks if the directory is valid.
+# 
+# @author: Djordje Jocic <office@djordjejocic.com>
+# @copyright: 2018 MIT License (MIT)
+# @version: 1.0.0
+# 
+# @param string $directory
+#   Directory that should be checked.
+# @return integer
+#   Value <i>1</i> if the directory is valid, and vice versa.
+
 function is_valid_directory()
 {
+    # Core Variables.
+    
+    directory=$1;
+    
     # Logic.
     
-    [[ -d $1 ]] && return 1;
+    [[ -d $directory ]] && return 1;
     
     return 0;
 }
 
+# Checks if the file is valid.
+# 
+# @author: Djordje Jocic <office@djordjejocic.com>
+# @copyright: 2018 MIT License (MIT)
+# @version: 1.0.0
+# 
+# @param string $file
+#   File that should be checked.
+# @return integer
+#   Value <i>1</i> if the file is valid, and vice versa.
+
 function is_valid_file()
 {
+    # Core Variables.
+    
+    file=$1;
+    
     # Logic.
     
-    [[ -f $1 ]] && return 1;
+    [[ -f $file ]] && return 1;
     
     return 0;
 }

@@ -69,11 +69,7 @@ else
     ##############################
     
     if is_root_user; then
-        
-        echo "Error: Local Domains must be ran with root priviledges.";
-        
-        exit;
-        
+        echo -e "Error: Local Domains must be ran with root priviledges." && exit;
     fi
     
     #############################################
@@ -111,51 +107,31 @@ else
     # Check Mode.
     
     if [[ -z $mode ]]; then
-        
-        echo "Error: You haven't selected a mode.";
-        
-        exit;
-        
+        echo -e "Error: You haven't selected a mode." && exit;
     fi
     
     # Check Domain.
     
     if [[ $(is_valid_domain $domain; echo $?) -eq 0 ]]; then
-        
-        echo "Error: Invalid domain name provided.";
-        
-        exit;
-        
+        echo -e "Error: Invalid domain name provided." && exit;
     fi
     
     # Check IP Address.
     
     if [[ $mode == "add" ]] && [[ $(is_valid_ip_address $ip_address; echo $?) -eq 0 ]]; then
-        
-        echo "Error: Invalid IP address provided.";
-        
-        exit;
-        
+        echo -e "Error: Invalid IP address provided." && exit;
     fi
     
     # Check Root Directory.
     
     if [[ $mode == "add" ]] && [[ $(is_valid_directory $root_dir; echo $?) -eq 0 ]]; then
-        
-        echo "Error: Invalid root directory provided. It doesn't exist.";
-        
-        exit;
-        
+        echo -e "Error: Invalid root directory provided. It doesn't exist." && exit;
     fi
     
     # Check Server Admin.
     
     if [[ $mode == "add" ]] && [[ $(is_valid_email_address $server_admin; echo $?) -eq 0 ]]; then
-        
-        echo "Error: Invalid email address for server admin provided.";
-        
-        exit;
-        
+        echo -e "Error: Invalid email address for server admin provided." && exit;
     fi
     
     # Check Certificate File & Key.
@@ -165,21 +141,13 @@ else
         # File.
         
         if [[ $(is_valid_file $cert_file; echo $?) -eq 0 ]]; then
-            
-            echo "Error: Invalid ceritfication file provided. It doesn't exist.";
-            
-            exit;
-            
+            echo -e "Error: Invalid ceritfication file provided. It doesn't exist." && exit;
         fi
         
         # Key.
         
         if [[ $(is_valid_file $cert_key; echo $?) -eq 0 ]]; then
-            
-            echo "Error: Invalid ceritfication key provided. It doesn't exist.";
-            
-            exit;
-            
+            echo -e "Error: Invalid ceritfication key provided. It doesn't exist." && exit;
         fi
         
     fi
@@ -206,34 +174,24 @@ else
         if [[ $temp =~ ^[Yy]$ ]]; then
             
             if [[ $mode == "add" ]]; then
-                
                 source "$source_dir/includes/add-domain.sh";
-                
             elif [[ $mode == "remove" ]]; then
-                
                 source "$source_dir/includes/remove-domain.sh";
-                
             else
-                
                 echo -e "Invalid mode selected.";
-                
             fi
             
             exit;
             
         elif [[ $temp =~ ^[Nn]$ ]]; then
             
-            echo -e;
-            echo -e "Exiting...";
-            
-            exit;
+            echo -e "\nExiting..." && exit;
             
         else
             
-            echo -e;
-            echo -e "Invalid option selected.";
-            echo -e;
+            echo -e "\nInvalid option selected.\n";
             
         fi
     done
+    
 fi
