@@ -33,4 +33,34 @@
 # LOGIC #
 #########
 
-cat "$source_dir/other/help.txt" && exit;
+# Prints project's help.
+# 
+# @author: Djordje Jocic <office@djordjejocic.com>
+# @copyright: 2018 MIT License (MIT)
+# @version: 1.0.0
+# 
+# @return void
+
+function show_help()
+{
+    # Logic
+    
+    cat "$source_dir/other/help.txt" && exit;
+}
+
+# Prints project's version.
+# 
+# @author: Djordje Jocic <office@djordjejocic.com>
+# @copyright: 2018 MIT License (MIT)
+# @version: 1.0.0
+# 
+# @return void
+
+function show_version()
+{
+    # Logic
+    
+    echo -e "Local Domains $version";
+    
+    cat "$source_dir/other/version.txt" && exit;
+}

@@ -29,56 +29,59 @@
 # OTHER DEALINGS IN THE SOFTWARE.                                 #
 ###################################################################
 
-##################
-# CORE VARIABLES #
-##################
+#########
+# LOGIC #
+#########
 
-domain_regex="^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)+(.*)$";
-raw_data="";
+# Prints project's version.
+# 
+# @author: Djordje Jocic <office@djordjejocic.com>
+# @copyright: 2018 MIT License (MIT)
+# @version: 1.0.0
+# 
+# @return void
 
-###################
-# OTHER VARIABLES #
-###################
-
-loop_index=0;
-temp="";
-domains_array=();
-addresses_array=();
-
-########################
-# STEP 1 - GATHER DATA #
-########################
-
-# Get Data.
-
-raw_data=$(cat "/etc/hosts");
-
-# Parse Domains.
-
-domains_array=$(grep "^127." <<< $raw_data | sed -r "s/^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)//g");
-
-readarray domains_array <<< $domains_array;
-
-# Parse Addresses.
-
-addresses_array=$(grep "^127." <<< $raw_data | sed -r "s/(\t)+(.*)$//g");
-
-readarray addresses_array <<< $addresses_array;
-
-#######################
-# STEP 2 - PRINT DATA #
-#######################
-
-echo -e "Available local domains are:";
-echo -e;
-
-for loop_index in "${!domains_array[@]}"; do
+function list_domains()
+{
+    # Core Variables
     
-    domains_array[$loop_index]=$(echo ${domains_array[loop_index]} | sed -r "s/\n//g");
-    addresses_array[$loop_index]=$(echo ${addresses_array[loop_index]} | sed -r "s/\n//g");
+    domain_regex="^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)+(.*)$";
+    raw_data="";
     
-    echo -e "$(($loop_index + 1)). ${domains_array[loop_index]} - ${addresses_array[loop_index]}";
+    # Other Variables
     
-done
-
-exit;
+    loop_index=0;
+    temp="";
+    domains_array=();
+    addresses_array=();
+    
+    # Step 1 - Get Raw Data
+    
+    raw_data=$(cat "/etc/hosts");
+    
+    # Step 2 - Get Domains
+    
+    domains_array=$(grep "^127." <<< $raw_data | sed -r "s/^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)//g");
+    
+    readarray domains_array <<< $domains_array;
+    
+    # Step 3 - Get Addresses
+    
+    addresses_array=$(grep "^127." <<< $raw_data | sed -r "s/(\t)+(.*)$//g");
+    
+    readarray addresses_array <<< $addresses_array;
+    
+    # Step 4 - Print Data
+    
+    echo -e "Available local domains are:";
+    echo -e;
+    
+    for loop_index in "${!domains_array[@]}"; do
+        
+        domains_array[$loop_index]=$(echo ${domains_array[loop_index]} | sed -r "s/\n//g");
+        addresses_array[$loop_index]=$(echo ${addresses_array[loop_index]} | sed -r "s/\n//g");
+        
+        echo -e "$(($loop_index + 1)). ${domains_array[loop_index]} - ${addresses_array[loop_index]}";
+        
+    done
+}

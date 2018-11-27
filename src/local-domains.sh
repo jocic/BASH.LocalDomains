@@ -33,8 +33,28 @@
 # CORE VARIABLES #
 ##################
 
+user_id=$(id -u);
 source_dir="$(cd "$( dirname "${BASH_SOURCE[0]}")" && pwd)"
 version="1.1.3";
+
+#######################
+# PARAMETER VARIABLES #
+#######################
+
+domain="";
+ip_address="";
+mode="";
+root_dir="";
+cert_file="";
+cert_key="";
+server_admin="";
+enable_ssl="";
+purge="";
+verbose_mode="";
+interactive_mode="no";
+list_domains="no";
+display_help="no";
+display_version="no";
 
 ###################
 # OTHER VARIABLES #
@@ -46,21 +66,24 @@ temp="";
 # LOGIC #
 #########
 
+source "$source_dir/includes/functions/core.sh";
+source "$source_dir/includes/functions/check.sh";
+source "$source_dir/includes/functions/domain.sh";
+
 source "$source_dir/includes/check-dependencies.sh";
 source "$source_dir/includes/process-parameters.sh";
-source "$source_dir/includes/add-check-functions.sh";
 
-if [[ $display_help == "yes" ]]; then
+if [[ "$display_help" == "yes" ]]; then
     
-    source "$source_dir/includes/show-help.sh";
+    show_help;
     
-elif [[ $display_version == "yes" ]]; then
+elif [[ "$display_version" == "yes" ]]; then
     
-    source "$source_dir/includes/show-version.sh";
+    show_version;
     
-elif [[ $list_domains == "yes" ]]; then
+elif [[ "$list_domains" == "yes" ]]; then
     
-    source "$source_dir/includes/list-domains.sh";
+    list_domains;
     
 else
     
@@ -76,27 +99,27 @@ else
     # STEP 2 - GATHER OR SET DEFAULT PARAMETERS #
     #############################################
     
-    if [[ $interactive_mode == "yes" ]]; then
+    if [[ "$interactive_mode" == "yes" ]]; then
         
         source "$source_dir/includes/manage-domain.sh";
         
     else
         
-        [[ -z $ip_address ]] && ip_address="127.0.0.1";
+        [[ -z "$ip_address" ]] && ip_address="127.0.0.1";
         
-        [[ -z $root_dir ]] && root_dir="/var/www/html";
+        [[ -z "$root_dir" ]] && root_dir="/var/www/html";
         
-        [[ -z $server_admin ]] && server_admin="webmaster@localhost";
+        [[ -z "$server_admin" ]] && server_admin="webmaster@localhost";
         
-        [[ -z $enable_ssl ]] && enable_ssl="no";
+        [[ -z "$enable_ssl" ]] && enable_ssl="no";
         
-        [[ -z $cert_file ]] && cert_file="$source_dir/templates/dummy-cert.crt";
+        [[ -z "$cert_file" ]] && cert_file="$source_dir/templates/dummy-cert.crt";
         
-        [[ -z $cert_key ]] && cert_key="$source_dir/templates/dummy-cert.key";
+        [[ -z "$cert_key" ]] && cert_key="$source_dir/templates/dummy-cert.key";
         
-        [[ -z $purge ]] && purge="no";
+        [[ -z "$purge" ]] && purge="no";
         
-        [[ -z $verbose_mode ]] && verbose_mode="no";
+        [[ -z "$verbose_mode" ]] && verbose_mode="no";
         
     fi
     
@@ -106,47 +129,47 @@ else
     
     # Check Mode.
     
-    if [[ -z $mode ]]; then
+    if [[ -z "$mode" ]]; then
         echo -e "Error: You haven't selected a mode." && exit;
     fi
     
     # Check Domain.
     
-    if [[ $(is_valid_domain $domain; echo $?) -eq 0 ]]; then
+    if [[ $(is_valid_domain "$domain"; echo $?) -eq 0 ]]; then
         echo -e "Error: Invalid domain name provided." && exit;
     fi
     
     # Check IP Address.
     
-    if [[ $mode == "add" ]] && [[ $(is_valid_ip_address $ip_address; echo $?) -eq 0 ]]; then
+    if [[ "$mode" == "add" ]] && [[ $(is_valid_ip_address "$ip_address"; echo $?) -eq 0 ]]; then
         echo -e "Error: Invalid IP address provided." && exit;
     fi
     
     # Check Root Directory.
     
-    if [[ $mode == "add" ]] && [[ $(is_valid_directory $root_dir; echo $?) -eq 0 ]]; then
+    if [[ "$mode" == "add" ]] && [[ $(is_valid_directory "$root_dir"; echo $?) -eq 0 ]]; then
         echo -e "Error: Invalid root directory provided. It doesn't exist." && exit;
     fi
     
     # Check Server Admin.
     
-    if [[ $mode == "add" ]] && [[ $(is_valid_email_address $server_admin; echo $?) -eq 0 ]]; then
+    if [[ "$mode" == "add" ]] && [[ $(is_valid_email_address "$server_admin"; echo $?) -eq 0 ]]; then
         echo -e "Error: Invalid email address for server admin provided." && exit;
     fi
     
     # Check Certificate File & Key.
     
-    if [[ $enable_ssl == "yes" ]]; then
+    if [[ "$enable_ssl" == "yes" ]]; then
         
         # File.
         
-        if [[ $(is_valid_file $cert_file; echo $?) -eq 0 ]]; then
+        if [[ $(is_valid_file "$cert_file"; echo $?) -eq 0 ]]; then
             echo -e "Error: Invalid ceritfication file provided. It doesn't exist." && exit;
         fi
         
         # Key.
         
-        if [[ $(is_valid_file $cert_key; echo $?) -eq 0 ]]; then
+        if [[ $(is_valid_file "$cert_key"; echo $?) -eq 0 ]]; then
             echo -e "Error: Invalid ceritfication key provided. It doesn't exist." && exit;
         fi
         
@@ -171,11 +194,11 @@ else
         read -p "Continue? (y/n) - " -n 1 temp;
         echo -e;
         
-        if [[ $temp =~ ^[Yy]$ ]]; then
+        if [[ "$temp" =~ ^[Yy]$ ]]; then
             
-            if [[ $mode == "add" ]]; then
+            if [[ "$mode" == "add" ]]; then
                 source "$source_dir/includes/add-domain.sh";
-            elif [[ $mode == "remove" ]]; then
+            elif [[ "$mode" == "remove" ]]; then
                 source "$source_dir/includes/remove-domain.sh";
             else
                 echo -e "Invalid mode selected.";
@@ -183,7 +206,7 @@ else
             
             exit;
             
-        elif [[ $temp =~ ^[Nn]$ ]]; then
+        elif [[ "$temp" =~ ^[Nn]$ ]]; then
             
             echo -e "\nExiting..." && exit;
             

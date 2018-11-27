@@ -29,25 +29,6 @@
 # OTHER DEALINGS IN THE SOFTWARE.                                 #
 ###################################################################
 
-#######################
-# PARAMETER VARIABLES #
-#######################
-
-domain="";
-ip_address="";
-mode="";
-root_dir="";
-cert_file="";
-cert_key="";
-server_admin="";
-enable_ssl="";
-purge="";
-verbose_mode="";
-interactive_mode="no";
-list_domains="no";
-display_help="no";
-display_version="no";
-
 #####################
 # CONTROL VARIABLES #
 #####################
