@@ -62,16 +62,21 @@ display_version="no";
 
 temp="";
 
-#########
-# LOGIC #
-#########
+##############################
+# STEP 1 - INCLUDE FUNCTIONS #
+##############################
 
 source "$source_dir/includes/functions/core.sh";
 source "$source_dir/includes/functions/check.sh";
 source "$source_dir/includes/functions/domain.sh";
 
 source "$source_dir/includes/check-dependencies.sh";
-source "$source_dir/includes/process-parameters.sh";
+
+############################
+# STEP 2 - PROCESS REQUEST #
+############################
+
+process_arguments "$@";
 
 if [[ "$display_help" == "yes" ]]; then
     

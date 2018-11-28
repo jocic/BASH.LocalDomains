@@ -54,6 +54,83 @@ parse_value()
     printf "%s" $value | sed -e "s/'/'\\\''/g";
 }
 
+# Processes passed script arguments.
+# 
+# @author: Djordje Jocic <office@djordjejocic.com>
+# @copyright: 2018 MIT License (MIT)
+# @version: 1.0.0
+# 
+# @param array $args
+#   Arguments that should be processed.
+# @return void
+
+process_arguments()
+{
+    # Control Variables
+    
+    queue="";
+    
+    # Logic
+    
+    for arg in "$@"; do
+        
+        # Assign Queued Values
+        
+        if [ "$queue" = "domain" ]; then
+            domain=$param_value;
+        elif [ "$queue" = "ip-address" ]; then
+            ip_address=$param_value;
+        elif [ "$queue" = "root-dir" ]; then
+            root_dir=$param_value;
+        elif [ "$queue" = "server-admin" ]; then
+            server_admin=$param_value;
+        elif [ "$queue" = "cert-file" ]; then
+            cert_file=$param_value;
+        elif [ "$queue" = "cert-key" ]; then
+            cert_key=$param_value;
+        fi
+        
+        # Reset Queue Value
+        
+        queue="";
+        
+        # Queue Commands
+        
+        if [ "$arg" = "-d" ] || [ "$arg" = "--domain" ]; then
+            queue="domain";
+        elif [ "$arg" = "-ip" ] || [ "$arg" = "--ip-address" ]; then
+            queue="ip";
+        elif [ "$arg" = "-rd" ] || [ "$arg" = "--root-dir" ]; then
+            queue="root-dir";
+        elif [ "$arg" = "-sa" ] || [ "$arg" = "--server-admin" ]; then
+            queue="server-admin";
+        elif [ "$arg" = "-cf" ] || [ "$arg" = "--cert-file" ]; then
+            queue="cert-file";
+        elif [ "$arg" = "-ck" ] || [ "$arg" = "--cert-key" ]; then
+            queue="cert-key";
+        elif [ "$arg" = "-a" ] || [ "$arg" = "--add" ]; then
+            mode="add";
+        elif [ "$arg" = "-r" ] || [ "$arg" = "--remove" ]; then
+            mode="remove";
+        elif [ "$arg" = "-s" ] || [ "$arg" = "--ssl" ]; then
+            enable_ssl="yes";
+        elif [ "$arg" = "-p" ] || [ "$arg" = "--purge" ]; then
+            purge="yes";
+        elif [ "$arg" = "-v" ] || [ "$arg" = "--verbose" ]; then
+            verbose_mode="yes";
+        elif [ "$arg" = "-i" ] || [ "$arg" = "--interactive" ]; then
+            interactive_mode="yes";
+        elif [ "$arg" = "-l" ] || [ "$arg" = "--list" ]; then
+            list_domains="yes";
+        elif [ "$arg" = "-h" ] || [ "$arg" = "--help" ]; then
+            display_help="yes";
+        elif [ "$arg" == "--version" ]; then
+            display_version="yes";
+        fi
+        
+    done
+}
+
 # Prints project's help.
 # 
 # @author: Djordje Jocic <office@djordjejocic.com>
