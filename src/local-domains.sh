@@ -70,8 +70,6 @@ source "$source_dir/includes/functions/core.sh";
 source "$source_dir/includes/functions/check.sh";
 source "$source_dir/includes/functions/domain.sh";
 
-source "$source_dir/includes/check-dependencies.sh";
-
 ############################
 # STEP 2 - PROCESS REQUEST #
 ############################
@@ -92,17 +90,27 @@ elif [[ "$list_domains" == "yes" ]]; then
     
 else
     
-    ##############################
-    # STEP 1 - CHECK PRICILEDGES #
-    ##############################
+    ######################
+    # CHECK DEPENDENCIES #
+    ######################
+    
+    temp=$(check_dependencies);
+    
+    if [ ! -z "$temp" ]; then
+        printf "%s\n" $temp && exit;
+    fi
+    
+    #####################
+    # CHECK PRIVILEDGES #
+    #####################
     
     if is_root_user; then
         echo -e "Error: Local Domains must be ran with root priviledges." && exit;
     fi
     
-    #############################################
-    # STEP 2 - GATHER OR SET DEFAULT PARAMETERS #
-    #############################################
+    ####################################
+    # GATHER OR SET DEFAULT PARAMETERS #
+    ####################################
     
     if [[ "$interactive_mode" == "yes" ]]; then
         
@@ -128,9 +136,9 @@ else
         
     fi
     
-    #############################
-    # STEP 3 - CHECK PARAMETERS #
-    #############################
+    ####################
+    # CHECK PARAMETERS #
+    ####################
     
     # Check Mode.
     
@@ -180,9 +188,9 @@ else
         
     fi
     
-    ###########################
-    # STEP 4 - PROCESS DOMAIN #
-    ###########################
+    ##################
+    # PROCESS DOMAIN #
+    ##################
     
     # Show Parameters.
     

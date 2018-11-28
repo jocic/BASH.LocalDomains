@@ -131,6 +131,39 @@ process_arguments()
     done
 }
 
+# Checks dependencies and the potential error message.
+# 
+# @author: Djordje Jocic <office@djordjejocic.com>
+# @copyright: 2018 MIT License (MIT)
+# @version: 1.0.0
+# 
+# @return void
+
+check_dependencies()
+{
+    # Core Variables
+    
+    packages=$(echo "sysvinit-utils apache2" | tr " " "\n");
+    
+    # Logic
+    
+    for package in $packages; do
+        
+        if [ "$(dpkg -l | grep "$package")" = "" ]; then
+            
+            if [ ! -z "$(command -v apt-get)" ]; then
+                printf "Error: Command \"%s\" is missing. Please install the dependency by typing \"apt-get install %s\".\n" $package $package;
+            elif [ ! -z "$(command -v yum)" ]; then
+                printf "Error: Command \"%s\" is missing. Please install the dependency by typing \"yum install %s\".\n" $package $package;
+            else
+                printf "Error: Command \"%s\" is missing. Please install \"%s\".\n" $package $package;
+            fi
+            
+        fi
+        
+    done
+}
+
 # Prints project's help.
 # 
 # @author: Djordje Jocic <office@djordjejocic.com>
