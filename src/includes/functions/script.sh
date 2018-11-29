@@ -121,15 +121,15 @@ process_arguments()
         
         if [ "$arg" = "-d" ] || [ "$arg" = "--domain" ]; then
             queue="domain";
-        elif [ "$arg" = "-ip" ] || [ "$arg" = "--ip-address" ]; then
-            queue="ip";
-        elif [ "$arg" = "-rd" ] || [ "$arg" = "--root-dir" ]; then
+        elif [ "$arg" = "-ip" ] || [ "$arg" = "-e" ] || [ "$arg" = "--ip-address" ]; then
+            queue="ip-address";
+        elif [ "$arg" = "-rd" ] || [ "$arg" = "-o" ] || [ "$arg" = "--root-dir" ]; then
             queue="root-dir";
-        elif [ "$arg" = "-sa" ] || [ "$arg" = "--server-admin" ]; then
+        elif [ "$arg" = "-sa" ] || [ "$arg" = "-m" ] || [ "$arg" = "--server-admin" ]; then
             queue="server-admin";
-        elif [ "$arg" = "-cf" ] || [ "$arg" = "--cert-file" ]; then
+        elif [ "$arg" = "-cf" ] || [ "$arg" = "-f" ] || [ "$arg" = "--cert-file" ]; then
             queue="cert-file";
-        elif [ "$arg" = "-ck" ] || [ "$arg" = "--cert-key" ]; then
+        elif [ "$arg" = "-ck" ] || [ "$arg" = "-k" ] || [ "$arg" = "--cert-key" ]; then
             queue="cert-key";
         elif [ "$arg" = "-a" ] || [ "$arg" = "--add" ]; then
             mode="add";
