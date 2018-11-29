@@ -53,6 +53,7 @@ purge="";
 verbose_mode="";
 interactive_mode="no";
 list_domains="no";
+install_deps="no";
 display_help="no";
 display_version="no";
 
@@ -66,6 +67,7 @@ temp="";
 # STEP 1 - INCLUDE FUNCTIONS #
 ##############################
 
+source "$source_dir/includes/functions/script.sh";
 source "$source_dir/includes/functions/core.sh";
 source "$source_dir/includes/functions/check.sh";
 source "$source_dir/includes/functions/domain.sh";
@@ -87,6 +89,26 @@ elif [[ "$display_version" == "yes" ]]; then
 elif [[ "$list_domains" == "yes" ]]; then
     
     list_domains;
+    
+elif [ "$install_deps" = "yes" ]; then
+    
+    if [ "$user_id" = "0" ]; then
+        
+        # Get Confirmation
+        
+        read -p "Install dependencies? (y/n) - " temp;
+        
+        # Install Depndencies
+        
+        if [ "$temp" = "Y" ] || [ "$temp" = "y" ]; then
+            printf "\n" && install_dependencies;
+        else
+            printf "\nCancelling...\n";
+        fi
+        
+    else
+        printf "Error: You need root privileges to install dependencies.\n" && exit;
+    fi
     
 else
     

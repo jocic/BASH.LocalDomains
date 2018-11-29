@@ -21,4 +21,5 @@ Available options:
   -v,  --verbose      : Explain what is being done.
   -l,  --list         : Lists all available domains.
   -h,  --help         : Display this help and exit.
+       --install      : Install required dependencies automatically.
        --version      : Output version information and exit.
