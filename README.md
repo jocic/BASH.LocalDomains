@@ -2,14 +2,14 @@
 
 Local Domains is a simple BASH script for creating local domains on Debian and Debian-based distributions.
 
-![Help Example](assets/img/help.png)
+![Help Example](img/help.png)
 
 Script has been tested on the following distributions:
 
 * Ubuntu 17.10 - 18.04
 * Debian 9.3 - 9.5
 
-[![Buy Me Coffee](assets/img/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
+[![Buy Me Coffee](img/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
 
 ## Versioning Scheme
 
@@ -117,3 +117,9 @@ Please don't hessitate to contact me if you have any questions, ideas, or concer
 My Twitter account is: [@jocic_91](https://www.twitter.com)
 
 My support E-Mail address is: <support@djordjejocic.com>
+
+## Copyright & License
+
+Copyright (C) 2018 Đorđe Jocić
+
+Licensed under the MIT license.
