@@ -33,30 +33,30 @@
 # LOGIC #
 #########
 
-if [[ $mode == "add" ]]; then
+if [ $mode = "add" ]; then
     
-    echo "Domain:          $domain";
-    echo "IP Address:      $ip_address";
-    echo "Root Dir:        $root_dir";
-    echo "Server Admin:    $server_admin";
-    echo "Purge:           $purge";
-    echo "Mode:            $mode";
-    echo "Enable SSL:      $enable_ssl";
+    printf "Domain:          %s" "$domain";
+    printf "IP Address:      %s" "$ip_address";
+    printf "Root Dir:        %s" "$root_dir";
+    printf "Server Admin:    %s" "$server_admin";
+    printf "Purge:           %s" "$purge";
+    printf "Mode:            %s" "$mode";
+    printf "Enable SSL:      %s" "$enable_ssl";
     
-    if [[ $enable_ssl == "yes" ]]; then
+    if [ $enable_ssl = "yes" ]; then
         
-        echo "Cert. File:      $cert_file";
-        echo "Cert. Key:       $cert_key";
+        printf "Cert. File:      %s" "$cert_file";
+        printf "Cert. Key:       %s" "$cert_key";
         
     fi
     
-    echo "Verbose Mode:    $verbose_mode";
+    printf "Verbose Mode:    %s" "$verbose_mode";
     
 else
     
-    echo "Domain:          $domain";
-    echo "Purge:           $purge";
-    echo "Mode:            $mode";
-    echo "Verbose Mode:    $verbose_mode";
+    printf "Domain:          %s" "$domain";
+    printf "Purge:           %s" "$purge";
+    printf "Mode:            %s" "$mode";
+    printf "Verbose Mode:    %s" "$verbose_mode";
     
 fi

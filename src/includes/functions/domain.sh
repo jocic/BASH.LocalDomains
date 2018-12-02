@@ -41,7 +41,7 @@
 # 
 # @return void
 
-function list_domains()
+list_domains()
 {
     # Core Variables
     
@@ -52,8 +52,8 @@ function list_domains()
     
     loop_index=0;
     temp="";
-    domains_array=();
-    addresses_array=();
+    domains_array="";
+    addresses_array="";
     
     # Step 1 - Get Raw Data
     
@@ -61,27 +61,28 @@ function list_domains()
     
     # Step 2 - Get Domains
     
-    domains_array=$(grep "^127." <<< $raw_data | sed -r "s/^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)//g");
+    domains_array=$(echo "$raw_data" | grep "^127." | sed -r "s/^(127.)+([0-9]{1,3}.)+([0-9]{1,3}.)+([0-9]{1,3})+(\t)//g");
     
-    readarray domains_array <<< $domains_array;
+    #readarray domains_array <<< $domains_array;
     
     # Step 3 - Get Addresses
     
-    addresses_array=$(grep "^127." <<< $raw_data | sed -r "s/(\t)+(.*)$//g");
+    addresses_array=$(echo "$raw_data" | grep "^127." | sed -r "s/(\t)+(.*)$//g");
     
-    readarray addresses_array <<< $addresses_array;
+    #readarray addresses_array <<< $addresses_array;
     
     # Step 4 - Print Data
     
-    echo -e "Available local domains are:";
-    echo -e;
+    printf "Available local domains are:\n\n";
     
-    for loop_index in "${!domains_array[@]}"; do
+    for address in $addresses_array; do
         
-        domains_array[$loop_index]=$(echo ${domains_array[loop_index]} | sed -r "s/\n//g");
-        addresses_array[$loop_index]=$(echo ${addresses_array[loop_index]} | sed -r "s/\n//g");
+        loop_index=$(( loop_index + 1 ));
         
-        echo -e "$(($loop_index + 1)). ${domains_array[loop_index]} - ${addresses_array[loop_index]}";
+        domain=$(echo "$domains_array" | sed -n "${loop_index}p");
+        ip_address=$(echo "$addresses_array" | sed -n "${loop_index}p");
+        
+        echo "$loop_index. $domain - $ip_address";
         
     done
 }

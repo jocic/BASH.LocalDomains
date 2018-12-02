@@ -42,11 +42,11 @@
 # @return integer
 #   Value <i>1</i> if the user has root privileges, and vice versa.
 
-function is_root_user()
+is_root_user()
 {
     # Logic.
     
-    [[ "$(id -u)" == "0" ]] && return 1;
+    [ "$(id -u)" = "0" ] && return 1;
     
     return 0;
 }
@@ -62,7 +62,7 @@ function is_root_user()
 # @return integer
 #   Value <i>1</i> if the domain is valid, and vice versa.
 
-function is_valid_domain()
+is_valid_domain()
 {
     # Core Variables.
     
@@ -73,7 +73,7 @@ function is_valid_domain()
     
     probe=$(echo $domain | grep -P '(?=^.{5,254}$)(^(?:(?!\d+\.)[a-zA-Z0-9_\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$)');
     
-    [[ -z $probe ]] && return 0;
+    [ -z $probe ] && return 0;
     
     return 1;
 }
@@ -89,7 +89,7 @@ function is_valid_domain()
 # @return integer
 #   Value <i>1</i> if the email address is valid, and vice versa.
 
-function is_valid_email_address()
+is_valid_email_address()
 {
     # Core Variables.
     
@@ -100,7 +100,7 @@ function is_valid_email_address()
     
     probe=$(echo $email_address | grep -P "^([A-Za-z0-9._%+-])+(@)+([A-Za-z0-9.-])+$");
     
-    [[ -z $probe ]] && return 0;
+    [ -z $probe ] && return 0;
     
     return 1;
 }
@@ -116,7 +116,7 @@ function is_valid_email_address()
 # @return integer
 #   Value <i>1</i> if the IP address is valid, and vice versa.
 
-function is_valid_ip_address()
+is_valid_ip_address()
 {
     # Core Variables.
     
@@ -127,7 +127,7 @@ function is_valid_ip_address()
     
     probe=$(echo $ip_address | grep -P "^(127\.)+([0-9]{1,3}\.)+([0-9]{1,3}\.)+([0-9]{1,3})$");
     
-    [[ -z $probe ]] && return 0;
+    [ -z $probe ] && return 0;
     
     return 1;
 }
@@ -143,7 +143,7 @@ function is_valid_ip_address()
 # @return integer
 #   Value <i>1</i> if the directory is valid, and vice versa.
 
-function is_valid_directory()
+is_valid_directory()
 {
     # Core Variables.
     
@@ -151,7 +151,7 @@ function is_valid_directory()
     
     # Logic.
     
-    [[ -d $directory ]] && return 1;
+    [ -d $directory ] && return 1;
     
     return 0;
 }
@@ -167,7 +167,7 @@ function is_valid_directory()
 # @return integer
 #   Value <i>1</i> if the file is valid, and vice versa.
 
-function is_valid_file()
+is_valid_file()
 {
     # Core Variables.
     
@@ -175,7 +175,7 @@ function is_valid_file()
     
     # Logic.
     
-    [[ -f $file ]] && return 1;
+    [ -f $file ] && return 1;
     
     return 0;
 }

@@ -60,11 +60,11 @@ temp="";
 # STEP 1 - LOAD APACHE CONFIG #
 ###############################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "\n- Loading apache configuration template...";
+if [ $verbose_mode = "yes" ]; then
+    printf "\n- Loading apache configuration template...\n";
 fi
 
-if [[ $enable_ssl == "yes" ]]; then
+if [ $enable_ssl = "yes" ]; then
     apache_config=$(cat "$source_dir/templates/with-ssl.conf");
 else
     apache_config=$(cat "$source_dir/templates/without-ssl.conf");
@@ -74,8 +74,8 @@ fi
 # STEP 2 - GENERATE CONFIG FILENAME #
 #####################################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Generating filename prefix for necessary files...";
+if [ $verbose_mode = "yes" ]; then
+    printf -- "- Generating filename prefix for necessary files...\n";
 fi
 
 filename_prefix="${domain//$filename_prefix_pattern/_}";
@@ -84,8 +84,8 @@ filename_prefix="${domain//$filename_prefix_pattern/_}";
 # STEP 3 - PROCESS APACHE CONFIG #
 ##################################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Processing apache configuration template...";
+if [ $verbose_mode = "yes" ]; then
+    printf -- "- Processing apache configuration template...\n";
 fi
 
 apache_config="${apache_config//$domain_pattern/$domain}";
@@ -98,8 +98,8 @@ apache_config="${apache_config//$cert_key_pattern/\/etc\/apache2\/ssl\/$filename
 # STEP 4 - ADD CONFIGURATION FILES #
 ####################################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Saving apache configuration...";
+if [ $verbose_mode = "yes" ]; then
+    printf -- "- Saving apache configuration...\n";
 fi
 
 echo "$apache_config" > "/etc/apache2/sites-available/$filename_prefix.conf";
@@ -109,11 +109,11 @@ echo "$apache_config" > "/etc/apache2/sites-enabled/$filename_prefix.conf";
 # STEP 5 - CREATE CERTIFICATE FOLDER #
 ######################################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Creating SSL directory (if it doesn't exist)...";
+if [ $verbose_mode = "yes" ]; then
+    printf -- "- Creating SSL directory (if it doesn't exist)...\n";
 fi
 
-if [[ ! -d "/etc/apache2/ssl" ]]; then
+if [ ! -d "/etc/apache2/ssl" ]; then
   mkdir -p -m 700 "/etc/apache2/ssl";
 fi
 
@@ -121,8 +121,8 @@ fi
 # STEP 6 - ADD CERTIFICATE FILES #
 ##################################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Adding dummy SSL certificates...";
+if [ $verbose_mode = "yes" ]; then
+    printf -- "- Adding dummy SSL certificates...\n";
 fi
 
 cp $cert_file "/etc/apache2/ssl/$filename_prefix.crt";
@@ -133,12 +133,12 @@ cp $cert_key "/etc/apache2/ssl/$filename_prefix.key";
 # STEP 7 - CREATE ROOT DIRECTORY #
 ##################################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Creating root directory (if it doesn't exist)...";
+if [ $verbose_mode = "yes" ]; then
+    printf -- "- Creating root directory (if it doesn't exist)...\n";
 fi
 
-if [[ ! -d "$DIRECTORY" ]]; then
-  mkdir -p -m 777 /var/apache2/ssl
+if [ ! -d "$DIRECTORY" ]; then
+    mkdir -p -m 777 /var/apache2/ssl
 fi
 
 ##################################
@@ -147,15 +147,13 @@ fi
 
 temp=$(ls /etc/apache2/mods-enabled/ | grep -c "rewrite");
 
-if [[ $temp == 0 ]]; then
+if [ $temp = 0 ]; then
     
-    echo -e "\nRewrite module is currently disabled.\n";
+    printf "\nRewrite module is currently disabled.\n\n";
     
-    read -p "Enable rewrite module? (y/n) - " -n 1 temp;
+    read -p "Enable rewrite module? (y/n) - " -n 1 temp && printf "\n";
     
-    echo -e "\n";
-    
-    if [[ $temp =~ ^[Yy]$ ]]; then
+    if [ $temp = "Y" ] || [ $temp = "y" ]; then
         a2enmod rewrite;
     fi
     
@@ -165,19 +163,17 @@ fi
 # STEP 9 - ENABLE SSL MODULE #
 ##############################
 
-if [[ $enable_ssl == "yes" ]]; then
+if [ $enable_ssl = "yes" ]; then
     
     temp=$(ls /etc/apache2/mods-enabled/ | grep -c "ssl");
     
-    if [ $temp == 0 ]; then
+    if [ $temp = 0 ]; then
         
-        echo -e "\nRewrite module is currently disabled.\n";
+        printf "\nRewrite module is currently disabled.\n\n";
         
-        read -p "Enable SSL module? (y/n) - " -n 1 temp;
+        read -p "Enable SSL module? (y/n) - " -n 1 temp && printf "\n";
         
-        echo -e "\n";
-        
-        if [[ $temp =~ ^[Yy]$ ]]; then
+        if [ $temp = "Y" ] || [ $temp = "y" ]; then
             a2enmod ssl;
         fi
         
@@ -189,8 +185,8 @@ fi
 # STEP 10 - ADD HOSTNAME #
 ##########################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Adding domain to the \"/etc/hosts\" list...";
+if [ $verbose_mode = "yes" ]; then
+    printf -- "- Adding domain to the \"/etc/hosts\" list...\n";
 fi
 
 hosts_data=$(cat "/etc/hosts");
@@ -207,25 +203,23 @@ echo -e "$hosts_data\n$domain_line" > "/etc/hosts";
 # STEP 11 - PURGE ROOT DIRECTORY #
 ##################################
 
-if [[ $purge == "yes" ]]; then
+if [ $purge = "yes" ]; then
     
     # Purge Directory.
     
-    if [[ -d $root_dir ]]; then
+    if [ -d $root_dir ]; then
         
-        echo -e;
+        printf "\n";
         
-        read -p "Purge root directory \"$root_dir\"? (y/n) - " -n 1 temp;
+        read -p "Purge root directory \"$root_dir\"? (y/n) - " -n 1 temp && printf "\n";
         
-        echo -e "\n";
-        
-        if [[ $temp =~ ^[Yy]$ ]]; then
+        if [ $temp = "Y" ] || [ $temp = "y" ]; then
             find $root_dir -mindepth 1 -delete;
         fi
         
     else
         
-        echo -e "- Root directory purging has been skipped as the directory doesn't exist.";
+        printf -- "- Root directory purging has been skipped as the directory doesn't exist.\n";
         
     fi
     
@@ -235,8 +229,8 @@ fi
 # STEP 12 - RESTART APACHE #
 ############################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Restarting apache...";
+if [ $verbose_mode = "yes" ]; then
+    printf -- "- Restarting apache...\n";
 fi
 
 service apache2 restart;

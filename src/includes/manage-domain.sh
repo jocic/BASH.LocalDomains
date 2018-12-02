@@ -40,39 +40,34 @@ domain_index=0;
 # STEP 1 - SELECT MODE #
 ########################
 
-if [[ -z $mode ]]; then
+if [ -z $mode ]; then
     
     # Print Title.
     
-    echo -e "- Do you want to add or remove a domain?";
-    echo -e;
+    printf -- "- Do you want to add or remove a domain?\n\n";
     
     # Print Options.
     
-    echo -e "1. Add";
-    echo -e "2. Remove";
-    echo -e;
+    printf "1. Add\n";
+    printf "2. Remove\n\n";
     
     # Process Input.
     
     while [ -z $mode ]; do
         
-        read -p "Option (1/2) - " -n 1 temp;
-        echo -e;
+        read -p "Option (1/2) - " -n 1 temp && printf "\n";
         
-        if [[ $temp == "1" ]]; then
+        if [ $temp = "1" ]; then
             
             mode="add";
             
-        elif [[ $temp == "2" ]]; then
+        elif [ $temp = "2" ]; then
             
             mode="remove";
             
         else
             
-            echo -e;
-            echo -e "Invalid option selected.";
-            echo -e;
+            printf "\nInvalid option selected.\n";
             
         fi
         
@@ -86,32 +81,29 @@ fi
 # STEP 2 - ENTER OR SELECT DOMAIN #
 ###################################
 
-if [[ -z $domain ]]; then
+if [ -z $domain ]; then
     
     # Enter Domain For Mode "Add"
     
-    if [[ $mode == "add" ]]; then
+    if [ $mode = "add" ]; then
         
         # Print Title.
         
-        echo -e "- Please enter a domain that you want to use.";
-        echo -e;
+        printf -- "- Please enter a domain that you want to use.\n";
         
         # Process Input.
         
-        while [[ -z $domain ]]; do
+        while [ -z $domain ]; do
             
-            read -p "Domain (ex. www.my-domain.com) - " temp;
-            echo -e;
+            read -p "Domain (ex. www.my-domain.com) - " temp && printf "\n";
             
-            if [[ $(is_valid_domain $temp; echo $?) -eq 1 ]]; then
+            if [ $(is_valid_domain $temp; echo $?) -eq 1 ]; then
                 
                 domain=$temp;
                 
             else
                 
-                echo -e "Invalid domain provided.";
-                echo -e;
+                printf "Invalid domain provided.\n";
                 
             fi
             
@@ -121,12 +113,11 @@ if [[ -z $domain ]]; then
     
     # Select Domain For Mode "Remove"
     
-    if [[ $mode == "remove" ]]; then
+    if [ $mode = "remove" ]; then
         
         # Print Title.
         
-        echo -e "- Please select domain you want removed.";
-        echo -e;
+        printf -- "- Please select domain you want removed.\n";
         
         # Print Domains.
         
@@ -145,17 +136,15 @@ if [[ -z $domain ]]; then
         
         # Process Input.
         
-        while [[ -z $domain ]]; do
+        while [ -z $domain ]; do
             
-            read -p "Domain index - " temp;
-            echo -e;
+            read -p "Domain index - " temp && printf "\n";
             
             temp=$(($temp - 1));
             
-            if [[ -z ${available_domains[temp]} ]]; then
+            if [ -z ${available_domains[temp]} ]; then
                 
-                echo -e "Invalid domain provided.";
-                echo -e;
+                printf "Invalid domain provided.\n";
                 
             else
                 
@@ -173,32 +162,29 @@ fi
 # STEP 3 - IP ADDRESS #
 #######################
 
-if [[ -z $ip_address ]] && [[ $mode == "add" ]]; then
+if [ -z $ip_address ] && [ $mode == "add" ]; then
     
     # Print Title.
     
-    echo -e "- Please enter an IP address that you want to use, or press enter to use the default value.";
-    echo -e;
+    printf -- "- Please enter an IP address that you want to use, or press enter to use the default value.\n";
     
     # Process Input.
     
-    while [[ -z $ip_address ]]; do
+    while [ -z $ip_address ]; do
         
-        read -p "IP address (ex. 127.0.0.1) - " temp;
-        echo -e;
+        read -p "IP address (ex. 127.0.0.1) - " temp && printf "\n";
         
-        if [[ -z $temp ]]; then
+        if [ -z $temp ]; then
             
             ip_address="127.0.0.1";
             
-        elif [[ $(is_valid_ip_address $temp; echo $?) -eq 1 ]]; then
+        elif [ $(is_valid_ip_address $temp; echo $?) -eq 1 ]; then
             
             ip_address=$temp;
             
         else
             
-            echo -e "Invalid IP address provided.";
-            echo -e;
+            printf "Invalid IP address provided.\n";
             
         fi
         
@@ -210,32 +196,29 @@ fi
 # STEP 4 - ROOT DIRECTORY #
 ###########################
 
-if [[ -z $root_dir ]] && [[ $mode == "add" ]]; then
+if [ -z $root_dir ] && [ $mode == "add" ]; then
     
     # Print Title.
     
-    echo -e "- Please enter a root directory that you want to use, or press enter to use the default value.";
-    echo -e;
+    printf -- "- Please enter a root directory that you want to use, or press enter to use the default value.\n";
     
     # Process Input.
     
-    while [[ -z $root_dir ]]; do
+    while [ -z $root_dir ]; do
         
-        read -p "Root directory (ex. /var/www/html) - " temp;
-        echo -e;
+        read -p "Root directory (ex. /var/www/html) - " temp && printf "\n";
         
-        if [[ -z $temp ]]; then
+        if [ -z $temp ]; then
             
             root_dir="/var/www/html";
             
-        elif [[ $(is_valid_directory $temp; echo $?) -eq 1 ]]; then
+        elif [ $(is_valid_directory $temp; echo $?) -eq 1 ]; then
             
             root_dir=$temp;
             
         else
             
-            echo -e "Invalid root directory provided. It doesn't exist.";
-            echo -e;
+            printf "Invalid root directory provided. It doesn't exist.\n";
             
         fi
         
@@ -247,32 +230,29 @@ fi
 # STEP 5 - SERVER ADMIN #
 #########################
 
-if [[ -z $server_admin ]] && [[ $mode == "add" ]]; then
+if [ -z $server_admin ] && [ $mode == "add" ]; then
     
     # Print Title.
     
-    echo -e "- Please enter an email address for server admin, or press enter to use the default value.";
-    echo -e;
+    printf -- "- Please enter an email address for server admin, or press enter to use the default value.\n";
     
     # Process Input.
     
-    while [[ -z $server_admin ]]; do
+    while [ -z $server_admin ]; do
         
-        read -p "Server admin (ex. admin@my-domain.com) - " temp;
-        echo -e;
+        read -p "Server admin (ex. admin@my-domain.com) - " temp && printf "\n";
         
-        if [[ -z $temp ]]; then
+        if [ -z $temp ]; then
             
             server_admin="webmaster@localhost";
             
-        elif [[ $(is_valid_email_address $temp; echo $?) -eq 1 ]]; then
+        elif [ $(is_valid_email_address $temp; echo $?) -eq 1 ]; then
             
             server_admin=$temp;
             
         else
             
-            echo -e "Invalid email address for server admin provided.";
-            echo -e;
+            printf "Invalid email address for server admin provided.\n";
             
         fi
         
@@ -284,33 +264,29 @@ fi
 # STEP 6 - SSL #
 ################
 
-if [[ -z $enable_ssl ]] && [[ $mode == "add" ]]; then
+if [ -z $enable_ssl ] && [ $mode == "add" ]; then
     
     # Print Title.
     
-    echo -e "- Do you want to enable SSL?";
-    echo -e;
+    printf -- "- Do you want to enable SSL?\n";
     
     # Process Input.
     
-    while [[ -z $enable_ssl ]]; do
+    while [ -z $enable_ssl ]; do
         
-        read -p "Enable SSL (y/n) - " -n 1 temp;
-        echo -e;
+        read -p "Enable SSL (y/n) - " -n 1 temp && printf "\n";
         
-        if [[ $temp =~ ^[Yy]$ ]]; then
+        if [ $temp = "Y" ] || [ $temp = "y" ]; then
             
             enable_ssl="yes";
             
-        elif [[ $temp =~ ^[Nn]$ ]]; then
+        elif [ $temp = "N" ] || [ $temp = "n" ]; then
             
             enable_ssl="no";
             
         else
             
-            echo -e;
-            echo -e "Invalid option selected.";
-            echo -e;
+            printf "Invalid option selected.\n";
             
         fi
         
@@ -324,32 +300,29 @@ fi
 # STEP 7- CERTIFICATE FILE #
 ############################
 
-if [[ -z $cert_file ]] && [[ $mode == "add" ]] && [[ $enable_ssl == "yes" ]]; then
+if [ -z $cert_file ] && [ $mode = "add" ] && [ $enable_ssl = "yes" ]; then
     
     # Print Title.
     
-    echo -e "- Please enter a path of your certificate file, or press enter to use the default value?";
-    echo -e;
+    printf -- "- Please enter a path of your certificate file, or press enter to use the default value?\n";
     
     # Process Input.
     
-    while [[ -z $cert_file ]]; do
+    while [ -z $cert_file ]; do
         
-        read -p "Certification file (ex. /etc/apache2/ssl/dummy-ssl.crt) - " temp;
-        echo -e;
+        read -p "Certification file (ex. /etc/apache2/ssl/dummy-ssl.crt) - " temp && printf "\n";
         
-        if [[ -z $temp ]]; then
+        if [ -z $temp ]; then
             
             cert_file="$source_dir/templates/dummy-cert.crt";
             
-        elif [[ $(is_valid_file $temp; echo $?) -eq 1 ]]; then
+        elif [ $(is_valid_file $temp; echo $?) -eq 1 ]; then
             
             cert_file=$temp;
             
         else
             
-            echo -e "Invalid ceritfication file provided. It doesn't exist.";
-            echo -e;
+            printf "Invalid ceritfication file provided. It doesn't exist.\n";
             
         fi
         
@@ -361,32 +334,29 @@ fi
 # STEP 8 - CERTIFICATE KEY #
 ############################
 
-if [[ -z $cert_key ]] && [[ $mode == "add" ]] && [[ $enable_ssl == "yes" ]]; then
+if [ -z $cert_key ] && [ $mode = "add" ] && [ $enable_ssl = "yes" ]; then
     
     # Print Title.
     
-    echo -e "- Please enter a path of your certificate key, or press enter to use the default value?";
-    echo -e;
+    printf -- "- Please enter a path of your certificate key, or press enter to use the default value?\n";
     
     # Process Input.
     
-    while [[ -z $cert_key ]]; do
+    while [ -z $cert_key ]; do
         
-        read -p "Certification key (ex. /etc/apache2/ssl/dummy-ssl.key) - " temp;
-        echo -e;
+        read -p "Certification key (ex. /etc/apache2/ssl/dummy-ssl.key) - " temp && printf "\n";
         
-        if [[ -z $temp ]]; then
+        if [ -z $temp ]; then
             
             cert_key="$source_dir/templates/dummy-cert.key";
             
-        elif [[ $(is_valid_file $temp; echo $?) -eq 1 ]]; then
+        elif [ $(is_valid_file $temp; echo $?) -eq 1 ]; then
             
             cert_key=$temp;
             
         else
             
-            echo -e "Invalid ceritfication key provided. It doesn't exist.";
-            echo -e;
+            printf "Invalid ceritfication key provided. It doesn't exist.\n";
             
         fi
         
@@ -398,33 +368,29 @@ fi
 # STEP 9 - PURGE #
 ##################
 
-if [[ -z $purge ]]; then
+if [ -z $purge ]; then
     
     # Print Title.
     
-    echo -e "- Do you want to purge root directory of a domain?";
-    echo -e;
+    printf -- "- Do you want to purge root directory of a domain?\n";
     
     # Process Input.
     
-    while [[ -z $purge ]]; do
+    while [ -z $purge ]; do
         
-        read -p "Purge root directory (y/n) - " -n 1 temp;
-        echo -e;
+        read -p "Purge root directory (y/n) - " -n 1 temp && printf "\n";
         
-        if [[ $temp =~ ^[Yy]$ ]]; then
+        if [ $temp = "Y" ] || [ $temp = "y" ]; then
             
             purge="yes";
             
-        elif [[ $temp =~ ^[Nn]$ ]]; then
+        elif [ $temp = "N" ] || [ $temp = "n" ]; then
             
             purge="no";
             
         else
             
-            echo -e;
-            echo -e "Invalid option selected.";
-            echo -e;
+            printf "Invalid option selected.\n";
             
         fi
         
@@ -438,33 +404,29 @@ fi
 # STEP 10 - VERBOSE MODE #
 ##########################
 
-if [[ -z $verbose_mode ]]; then
+if [ -z $verbose_mode ]; then
     
     # Print Title.
     
-    echo -e "- Do you want to enable verbose mode?";
-    echo -e;
+    printf -- "- Do you want to enable verbose mode?\n";
     
     # Process Input.
     
-    while [[ -z $verbose_mode ]]; do
+    while [ -z $verbose_mode ]; do
         
-        read -p "Enable verbose mode (y/n) - " -n 1 temp;
-        echo -e;
+        read -p "Enable verbose mode (y/n) - " -n 1 temp && printf "\n";
         
-        if [[ $temp =~ ^[Yy]$ ]]; then
+        if [ $temp = "Y" ] || [ $temp = "y" ]; then
             
             verbose_mode="yes";
             
-        elif [[ $temp =~ ^[Nn]$ ]]; then
+        elif [ $temp = "N" ] || [ $temp = "n" ]; then
             
             verbose_mode="no";
             
         else
             
-            echo -e;
-            echo -e "Invalid option selected.";
-            echo -e;
+            printf "Invalid option selected.\n";
             
         fi
         

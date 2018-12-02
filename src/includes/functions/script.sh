@@ -72,7 +72,7 @@ show_version()
 {
     # Logic
     
-    echo -e "Local Domains $version";
+    printf "Local Domains %s" "$version";
     
     cat "$source_dir/other/version.txt" && exit;
 }

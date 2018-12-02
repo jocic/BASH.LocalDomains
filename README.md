@@ -95,7 +95,7 @@ echo alias local-domains="/path/to/your/folder/local-domains.sh" >> ~/.bash_alia
 
 Alternatively, you can add my personal APT repository to your machine and install **LocalDomains** like you would anything else.
 
-Add a repository.
+Add the repository.
 
 ```bash
 wget -nc https://www.djordjejocic.com/files/apt/Release.key
@@ -107,7 +107,7 @@ sudo apt-get update
 Install project.
 
 ```bash
-apt-get install local-domains
+sudo apt-get install local-domains
 ```
 
 ## Support

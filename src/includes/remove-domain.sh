@@ -53,8 +53,8 @@ domain_regex="";
 # STEP 1 - GENERATE CONFIG FILENAME #
 #####################################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "\n- Generating filename prefix for necessary files...";
+if [ $verbose_mode = "yes" ]; then
+    printf -- "\n- Generating filename prefix for necessary files...\n";
 fi
 
 filename_prefix="${domain//$filename_prefix_pattern/_}";
@@ -63,8 +63,8 @@ filename_prefix="${domain//$filename_prefix_pattern/_}";
 # STEP 2 - REMOVE CONFIGURATION FILES #
 #######################################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Removing configuration files...";
+if [ $verbose_mode = "yes" ]; then
+    printf -- "- Removing configuration files...\n";
 fi
 
 # Cache Configuration.
@@ -73,11 +73,11 @@ apache_config=$(cat "/etc/apache2/sites-available/$filename_prefix.conf");
 
 # Remove Configuration Files.
 
-if [[ -f "/etc/apache2/sites-available/$filename_prefix.conf" ]]; then
+if [ -f "/etc/apache2/sites-available/$filename_prefix.conf" ]; then
     rm "/etc/apache2/sites-available/$filename_prefix.conf";
 fi
 
-if [[ -f "/etc/apache2/sites-enabled/$filename_prefix.conf" ]]; then
+if [ -f "/etc/apache2/sites-enabled/$filename_prefix.conf" ]; then
     rm "/etc/apache2/sites-enabled/$filename_prefix.conf";
 fi
 
@@ -85,15 +85,15 @@ fi
 # STEP 3 - REMOVE CERTIFICATE FILES #
 #####################################
 
-if [[ $verbose_mode == "yes" ]]; then
+if [ $verbose_mode = "yes" ]; then
     echo -e "- Removing certificate files...";
 fi
 
-if [[ -f "/etc/apache2/ssl/$filename_prefix.crt" ]]; then
+if [ -f "/etc/apache2/ssl/$filename_prefix.crt" ]; then
     rm "/etc/apache2/ssl/$filename_prefix.crt";
 fi
 
-if [[ -f "/etc/apache2/ssl/$filename_prefix.key" ]]; then
+if [ -f "/etc/apache2/ssl/$filename_prefix.key" ]; then
     rm "/etc/apache2/ssl/$filename_prefix.key";
 fi
 
@@ -101,8 +101,8 @@ fi
 # STEP 4 - ADD HOSTNAME #
 #########################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Removing domain from the \"/etc/hosts\" list...";
+if [ $verbose_mode = "yes" ]; then
+    printf -- "- Removing domain from the \"/etc/hosts\" list...\n";
 fi
 
 hosts_data=$(cat "/etc/hosts");
@@ -118,31 +118,29 @@ echo "$hosts_data" > "/etc/hosts";
 # STEP 5 - PURGE ROOT DIRECTORY #
 #################################
 
-if [[ $purge == "yes" ]]; then
+if [ $purge = "yes" ]; then
     
     # Determine Directory.
     
-    if [[ -z $root_dir ]]; then
+    if [ -z $root_dir ]; then
         root_dir=$(echo "$apache_config" | grep -oPZ "((?<=DocumentRoot))+(.*)" | xargs);
     fi
     
     # Purge Directory.
     
-    if [[ -d $root_dir ]]; then
+    if [ -d $root_dir ]; then
         
-        echo -e;
+        printf "\n";
         
-        read -p "Purge root directory \"$root_dir\"? (y/n) - " -n 1 temp;
+        read -p "Purge root directory \"$root_dir\"? (y/n) - " -n 1 temp && printf "\n";
         
-        echo -e "\n";
-        
-        if [[ $temp =~ ^[Yy]$ ]]; then
+        if [ $temp = "Y" ] || [ $temp = "y" ]; then
             find $root_dir -mindepth 1 -delete;
         fi
         
     else
         
-        echo -e "- Root directory purging has been skipped as the directory doesn't exist.";
+        printf -- "- Root directory purging has been skipped as the directory doesn't exist.\n";
         
     fi
     
@@ -152,8 +150,8 @@ fi
 # STEP 6 - RESTART APACHE #
 ###########################
 
-if [[ $verbose_mode == "yes" ]]; then
-    echo -e "- Restarting apache...";
+if [ $verbose_mode = "yes" ]; then
+    printf -- "- Restarting apache...\n";
 fi
 
 service apache2 restart;
