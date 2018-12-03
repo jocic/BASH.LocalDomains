@@ -72,7 +72,7 @@ show_version()
 {
     # Logic
     
-    printf "Local Domains %s" "$version";
+    printf "Local Domains %s\n" "$version";
     
     cat "$source_dir/other/version.txt" && exit;
 }
@@ -99,19 +99,17 @@ process_arguments()
         
         # Assign Queued Values
         
-        if [ "$queue" = "domain" ]; then
-            domain=$param_value;
-        elif [ "$queue" = "ip-address" ]; then
-            ip_address=$param_value;
-        elif [ "$queue" = "root-dir" ]; then
-            root_dir=$param_value;
-        elif [ "$queue" = "server-admin" ]; then
-            server_admin=$param_value;
-        elif [ "$queue" = "cert-file" ]; then
-            cert_file=$param_value;
-        elif [ "$queue" = "cert-key" ]; then
-            cert_key=$param_value;
-        fi
+        [ "$queue" = "domain" ] && domain=$arg;
+        
+        [ "$queue" = "ip-address" ] && ip_address=$arg;
+        
+        [ "$queue" = "root-dir" ] && root_dir=$arg;
+        
+        [ "$queue" = "server-admin" ] && server_admin=$arg;
+        
+        [ "$queue" = "cert-file" ] && cert_file=$arg;
+        
+        [ "$queue" = "cert-key" ] && cert_key=$arg;
         
         # Reset Queue Value
         
@@ -119,39 +117,37 @@ process_arguments()
         
         # Queue Commands
         
-        if [ "$arg" = "-d" ] || [ "$arg" = "--domain" ]; then
-            queue="domain";
-        elif [ "$arg" = "-ip" ] || [ "$arg" = "-e" ] || [ "$arg" = "--ip-address" ]; then
-            queue="ip-address";
-        elif [ "$arg" = "-rd" ] || [ "$arg" = "-o" ] || [ "$arg" = "--root-dir" ]; then
-            queue="root-dir";
-        elif [ "$arg" = "-sa" ] || [ "$arg" = "-m" ] || [ "$arg" = "--server-admin" ]; then
-            queue="server-admin";
-        elif [ "$arg" = "-cf" ] || [ "$arg" = "-f" ] || [ "$arg" = "--cert-file" ]; then
-            queue="cert-file";
-        elif [ "$arg" = "-ck" ] || [ "$arg" = "-k" ] || [ "$arg" = "--cert-key" ]; then
-            queue="cert-key";
-        elif [ "$arg" = "-a" ] || [ "$arg" = "--add" ]; then
-            mode="add";
-        elif [ "$arg" = "-r" ] || [ "$arg" = "--remove" ]; then
-            mode="remove";
-        elif [ "$arg" = "-s" ] || [ "$arg" = "--ssl" ]; then
-            enable_ssl="yes";
-        elif [ "$arg" = "-p" ] || [ "$arg" = "--purge" ]; then
-            purge="yes";
-        elif [ "$arg" = "-v" ] || [ "$arg" = "--verbose" ]; then
-            verbose_mode="yes";
-        elif [ "$arg" = "-i" ] || [ "$arg" = "--interactive" ]; then
-            interactive_mode="yes";
-        elif [ "$arg" = "-l" ] || [ "$arg" = "--list" ]; then
-            list_domains="yes";
-        elif [ "$arg" = "--install" ]; then
-            install_deps="yes";
-        elif [ "$arg" = "-h" ] || [ "$arg" = "--help" ]; then
-            display_help="yes";
-        elif [ "$arg" == "--version" ]; then
-            display_version="yes";
-        fi
+        [ "$arg" = "-d" ] || [ "$arg" = "--domain" ] && queue="domain";
+        
+        [ "$arg" = "-ip" ] || [ "$arg" = "-e" ] || [ "$arg" = "--ip-address" ] && queue="ip-address";
+        
+        [ "$arg" = "-rd" ] || [ "$arg" = "-o" ] || [ "$arg" = "--root-dir" ] && queue="root-dir";
+        
+        [ "$arg" = "-sa" ] || [ "$arg" = "-m" ] || [ "$arg" = "--server-admin" ] && queue="server-admin";
+        
+        [ "$arg" = "-cf" ] || [ "$arg" = "-f" ] || [ "$arg" = "--cert-file" ] && queue="cert-file";
+        
+        [ "$arg" = "-ck" ] || [ "$arg" = "-k" ] || [ "$arg" = "--cert-key" ] && queue="cert-key";
+        
+        [ "$arg" = "-a" ] || [ "$arg" = "--add" ] && mode="add";
+        
+        [ "$arg" = "-r" ] || [ "$arg" = "--remove" ] && mode="remove";
+        
+        [ "$arg" = "-s" ] || [ "$arg" = "--ssl" ] && enable_ssl="yes";
+        
+        [ "$arg" = "-p" ] || [ "$arg" = "--purge" ] && purge="yes";
+        
+        [ "$arg" = "-v" ] || [ "$arg" = "--verbose" ] && verbose_mode="yes";
+        
+        [ "$arg" = "-i" ] || [ "$arg" = "--interactive" ] && interactive_mode="yes";
+        
+        [ "$arg" = "-l" ] || [ "$arg" = "--list" ] && list_domains="yes";
+        
+        [ "$arg" = "--install" ] && install_deps="yes";
+        
+        [ "$arg" = "-h" ] || [ "$arg" = "--help" ] && display_help="yes";
+        
+        [ "$arg" == "--version" ] && display_version="yes";
         
     done
 }
