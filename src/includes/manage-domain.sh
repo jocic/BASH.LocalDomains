@@ -276,11 +276,11 @@ if [ -z $enable_ssl ] && [ $mode == "add" ]; then
         
         read -p "Enable SSL (y/n) - " -n 1 temp && printf "\n";
         
-        if [ $temp = "Y" ] || [ $temp = "y" ]; then
+        if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
             
             enable_ssl="yes";
             
-        elif [ $temp = "N" ] || [ $temp = "n" ]; then
+        elif [ -n "$(echo "$temp" | grep -oP "$no_regex")" ]; then
             
             enable_ssl="no";
             
@@ -380,11 +380,11 @@ if [ -z $purge ]; then
         
         read -p "Purge root directory (y/n) - " -n 1 temp && printf "\n";
         
-        if [ $temp = "Y" ] || [ $temp = "y" ]; then
+        if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
             
             purge="yes";
             
-        elif [ $temp = "N" ] || [ $temp = "n" ]; then
+        elif [ -n "$(echo "$temp" | grep -oP "$no_regex")" ]; then
             
             purge="no";
             
@@ -416,11 +416,11 @@ if [ -z $verbose_mode ]; then
         
         read -p "Enable verbose mode (y/n) - " -n 1 temp && printf "\n";
         
-        if [ $temp = "Y" ] || [ $temp = "y" ]; then
+        if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
             
             verbose_mode="yes";
             
-        elif [ $temp = "N" ] || [ $temp = "n" ]; then
+        elif [ -n "$(echo "$temp" | grep -oP "$no_regex")" ]; then
             
             verbose_mode="no";
             

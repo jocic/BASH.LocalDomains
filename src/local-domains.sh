@@ -34,8 +34,15 @@
 ##################
 
 user_id="$(id -u)";
-source_dir="$(cd -- $(dirname -- "$0") && pwd -P)";
+source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)";
 version="1.1.3";
+
+###################
+# REGEX VARIABLES #
+###################
+
+yes_regex="^Y|y$";
+no_regex="^N|n$";
 
 #######################
 # PARAMETER VARIABLES #
@@ -88,7 +95,7 @@ if [ "$install_deps" = "yes" ]; then
         
         # Install Depndencies
         
-        if [ "$temp" = "Y" ] || [ "$temp" = "y" ]; then
+        if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
             printf "\n" && install_dependencies;
         else
             printf "\nCancelling...\n";
@@ -218,7 +225,7 @@ else
         do
             read -p "Continue? (y/n) - " -n 1 temp && printf "\n";
             
-            if [ "$temp" = "Y" ] || [ "$temp" = "y" ]; then
+            if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
                 
                 if [[ "$mode" == "add" ]]; then
                     . "$source_dir/includes/add-domain.sh";

@@ -134,7 +134,7 @@ if [ $purge = "yes" ]; then
         
         read -p "Purge root directory \"$root_dir\"? (y/n) - " -n 1 temp && printf "\n";
         
-        if [ $temp = "Y" ] || [ $temp = "y" ]; then
+        if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
             find $root_dir -mindepth 1 -delete;
         fi
         
