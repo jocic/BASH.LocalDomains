@@ -55,7 +55,7 @@ if [ -z $mode ]; then
     
     while [ -z $mode ]; do
         
-        read -p "Option (1/2) - " -n 1 temp && printf "\n";
+        read -rp "Option (1/2) - " -n 1 temp && printf "\n";
         
         if [ $temp = "1" ]; then
             
@@ -95,7 +95,7 @@ if [ -z $domain ]; then
         
         while [ -z $domain ]; do
             
-            read -p "Domain (ex. www.my-domain.com) - " temp && printf "\n";
+            read -rp "Domain (ex. www.my-domain.com) - " temp && printf "\n";
             
             if [ $(is_valid_domain $temp; echo $?) -eq 1 ]; then
                 
@@ -138,7 +138,7 @@ if [ -z $domain ]; then
         
         while [ -z $domain ]; do
             
-            read -p "Domain index - " temp && printf "\n";
+            read -rp "Domain index - " temp && printf "\n";
             
             temp=$(($temp - 1));
             
@@ -172,7 +172,7 @@ if [ -z $ip_address ] && [ $mode == "add" ]; then
     
     while [ -z $ip_address ]; do
         
-        read -p "IP address (ex. 127.0.0.1) - " temp && printf "\n";
+        read -rp "IP address (ex. 127.0.0.1) - " temp && printf "\n";
         
         if [ -z $temp ]; then
             
@@ -206,7 +206,7 @@ if [ -z $root_dir ] && [ $mode == "add" ]; then
     
     while [ -z $root_dir ]; do
         
-        read -p "Root directory (ex. /var/www/html) - " temp && printf "\n";
+        read -rp "Root directory (ex. /var/www/html) - " temp && printf "\n";
         
         if [ -z $temp ]; then
             
@@ -240,7 +240,7 @@ if [ -z $server_admin ] && [ $mode == "add" ]; then
     
     while [ -z $server_admin ]; do
         
-        read -p "Server admin (ex. admin@my-domain.com) - " temp && printf "\n";
+        read -rp "Server admin (ex. admin@my-domain.com) - " temp && printf "\n";
         
         if [ -z $temp ]; then
             
@@ -274,7 +274,7 @@ if [ -z $enable_ssl ] && [ $mode == "add" ]; then
     
     while [ -z $enable_ssl ]; do
         
-        read -p "Enable SSL (y/n) - " -n 1 temp && printf "\n";
+        read -rp "Enable SSL (y/n) - " -n 1 temp && printf "\n";
         
         if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
             
@@ -310,7 +310,7 @@ if [ -z $cert_file ] && [ $mode = "add" ] && [ $enable_ssl = "yes" ]; then
     
     while [ -z $cert_file ]; do
         
-        read -p "Certification file (ex. /etc/apache2/ssl/dummy-ssl.crt) - " temp && printf "\n";
+        read -rp "Certification file (ex. /etc/apache2/ssl/dummy-ssl.crt) - " temp && printf "\n";
         
         if [ -z $temp ]; then
             
@@ -344,7 +344,7 @@ if [ -z $cert_key ] && [ $mode = "add" ] && [ $enable_ssl = "yes" ]; then
     
     while [ -z $cert_key ]; do
         
-        read -p "Certification key (ex. /etc/apache2/ssl/dummy-ssl.key) - " temp && printf "\n";
+        read -rp "Certification key (ex. /etc/apache2/ssl/dummy-ssl.key) - " temp && printf "\n";
         
         if [ -z $temp ]; then
             
@@ -378,7 +378,7 @@ if [ -z $purge ]; then
     
     while [ -z $purge ]; do
         
-        read -p "Purge root directory (y/n) - " -n 1 temp && printf "\n";
+        read -rp "Purge root directory (y/n) - " -n 1 temp && printf "\n";
         
         if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
             
@@ -414,7 +414,7 @@ if [ -z $verbose_mode ]; then
     
     while [ -z $verbose_mode ]; do
         
-        read -p "Enable verbose mode (y/n) - " -n 1 temp && printf "\n";
+        read -rp "Enable verbose mode (y/n) - " -n 1 temp && printf "\n";
         
         if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
             

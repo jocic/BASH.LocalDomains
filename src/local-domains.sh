@@ -91,7 +91,7 @@ if [ "$install_deps" = "yes" ]; then
         
         # Get Confirmation
         
-        read -p "Install dependencies? (y/n) - " temp;
+        read -rp "Install dependencies? (y/n) - " temp;
         
         # Install Depndencies
         
@@ -223,7 +223,7 @@ else
         
         while true;
         do
-            read -p "Continue? (y/n) - " -n 1 temp && printf "\n";
+            read -rp "Continue? (y/n) - " -n 1 temp && printf "\n";
             
             if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
                 

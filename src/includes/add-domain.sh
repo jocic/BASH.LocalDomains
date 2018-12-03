@@ -151,7 +151,7 @@ if [ $temp = 0 ]; then
     
     printf "\nRewrite module is currently disabled.\n\n";
     
-    read -p "Enable rewrite module? (y/n) - " -n 1 temp && printf "\n";
+    read -rp "Enable rewrite module? (y/n) - " -n 1 temp && printf "\n";
     
     if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
         a2enmod rewrite;
@@ -171,7 +171,7 @@ if [ $enable_ssl = "yes" ]; then
         
         printf "\nRewrite module is currently disabled.\n\n";
         
-        read -p "Enable SSL module? (y/n) - " -n 1 temp && printf "\n";
+        read -rp "Enable SSL module? (y/n) - " -n 1 temp && printf "\n";
         
         if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
             a2enmod ssl;
@@ -211,7 +211,7 @@ if [ $purge = "yes" ]; then
         
         printf "\n";
         
-        read -p "Purge root directory \"$root_dir\"? (y/n) - " -n 1 temp && printf "\n";
+        read -rp "Purge root directory \"$root_dir\"? (y/n) - " -n 1 temp && printf "\n";
         
         if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
             find $root_dir -mindepth 1 -delete;
