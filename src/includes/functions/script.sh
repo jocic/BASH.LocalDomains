@@ -147,7 +147,7 @@ process_arguments()
         
         [ "$arg" = "-h" ] || [ "$arg" = "--help" ] && display_help="yes";
         
-        [ "$arg" == "--version" ] && display_version="yes";
+        [ "$arg" = "--version" ] && display_version="yes";
         
     done
 }

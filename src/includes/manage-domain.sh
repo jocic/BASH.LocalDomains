@@ -162,7 +162,7 @@ fi
 # STEP 3 - IP ADDRESS #
 #######################
 
-if [ -z $ip_address ] && [ $mode == "add" ]; then
+if [ -z $ip_address ] && [ $mode = "add" ]; then
     
     # Print Title.
     
@@ -196,7 +196,7 @@ fi
 # STEP 4 - ROOT DIRECTORY #
 ###########################
 
-if [ -z $root_dir ] && [ $mode == "add" ]; then
+if [ -z $root_dir ] && [ $mode = "add" ]; then
     
     # Print Title.
     
@@ -230,7 +230,7 @@ fi
 # STEP 5 - SERVER ADMIN #
 #########################
 
-if [ -z $server_admin ] && [ $mode == "add" ]; then
+if [ -z $server_admin ] && [ $mode = "add" ]; then
     
     # Print Title.
     
@@ -264,7 +264,7 @@ fi
 # STEP 6 - SSL #
 ################
 
-if [ -z $enable_ssl ] && [ $mode == "add" ]; then
+if [ -z $enable_ssl ] && [ $mode = "add" ]; then
     
     # Print Title.
     

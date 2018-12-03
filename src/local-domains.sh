@@ -227,9 +227,9 @@ else
             
             if [ -n "$(echo "$temp" | grep -oP "$yes_regex")" ]; then
                 
-                if [[ "$mode" == "add" ]]; then
+                if [[ "$mode" = "add" ]]; then
                     . "$source_dir/includes/add-domain.sh";
-                elif [[ "$mode" == "remove" ]]; then
+                elif [[ "$mode" = "remove" ]]; then
                     . "$source_dir/includes/remove-domain.sh";
                 else
                     echo -e "Invalid mode selected.";
