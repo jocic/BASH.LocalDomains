@@ -110,6 +110,14 @@ Install project.
 sudo apt-get install local-domains
 ```
 
+## Contribution
+
+Please review the following documents if you are planning to contribute to the project:
+
+* [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md)
+* [Contribution Guidelines](CONTRIBUTING.md)
+* [MIT License](LICENSE.md)
+
 ## Support
 
 Please don't hessitate to contact me if you have any questions, ideas, or concerns.
