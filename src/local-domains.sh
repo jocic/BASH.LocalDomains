@@ -111,8 +111,8 @@ else
     
     temp=$(check_dependencies);
     
-    if [ ! -z "$temp" ]; then
-        printf "%s\n" $temp && exit;
+    if [ -n "$temp" ]; then
+        printf "%s\n" "$temp" && exit;
     fi
     
     # Check Privileges
