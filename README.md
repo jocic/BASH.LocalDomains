@@ -116,6 +116,7 @@ Please review the following documents if you are planning to contribute to the p
 
 * [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md)
 * [Contribution Guidelines](CONTRIBUTING.md)
+* [Pull Request Template](PULL_REQUEST_TEMPLATE.md)
 * [MIT License](LICENSE.md)
 
 ## Support
