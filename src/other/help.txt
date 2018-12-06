@@ -4,9 +4,9 @@ Adds a local domain and restarts apache.
 
 Available modes:
 
-  -a, --add         : Select add mode.
-  -r, --remove      : Select remove mode.
-  -i, --interactive : Select interactive mode.
+  -a, --add          : Select add mode.
+  -r, --remove       : Select remove mode.
+  -i, --interactive  : Select interactive mode.
 
 Available options:
 

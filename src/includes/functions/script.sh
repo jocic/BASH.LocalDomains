@@ -145,9 +145,9 @@ process_arguments()
         
         [ "$arg" = "--install" ] && install_deps="yes";
         
-        [ "$arg" = "-h" ] || [ "$arg" = "--help" ] && display_help="yes";
+        [ "$arg" = "-h" ] || [ "$arg" = "--help" ] && show_help="yes";
         
-        [ "$arg" = "--version" ] && display_version="yes";
+        [ "$arg" = "--version" ] && show_version="yes";
         
     done
 }

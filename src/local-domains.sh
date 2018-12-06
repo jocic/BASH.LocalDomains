@@ -61,8 +61,8 @@ verbose_mode="";
 interactive_mode="no";
 list_domains="no";
 install_deps="no";
-display_help="no";
-display_version="no";
+show_help="no";
+show_version="no";
 
 ###################
 # OTHER VARIABLES #
@@ -123,11 +123,11 @@ else
     
     # Handle Request
     
-    if [ "$display_help" = "yes" ]; then
+    if [ "$show_help" = "yes" ]; then
         
         show_help;
         
-    elif [ "$display_version" = "yes" ]; then
+    elif [ "$show_version" = "yes" ]; then
         
         show_version;
         
