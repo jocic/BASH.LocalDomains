@@ -1,6 +1,9 @@
 ---
 name: Feature Request Template
 about: Use the following markdown template when creating a feature request.
+title: "[FEATURE]"
+labels: ''
+assignees: ''
 
 ---
 

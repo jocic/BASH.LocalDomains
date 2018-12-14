@@ -1,6 +1,9 @@
 ---
 name: Custom Issue Template
 about: Use the following markdown template when creating a custom issue template.
+title: "[CUSTOM]"
+labels: ''
+assignees: ''
 
 ---
 

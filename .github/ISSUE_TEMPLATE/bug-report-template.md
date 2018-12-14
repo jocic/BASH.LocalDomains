@@ -1,6 +1,9 @@
 ---
 name: Bug Report Template
 about: Use the following markdown template when creating a bug report.
+title: "[BUG]"
+labels: ''
+assignees: ''
 
 ---
 
