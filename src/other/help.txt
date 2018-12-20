@@ -1,4 +1,4 @@
-Usage: local-domains {mode} {options}
+Usage: local-domains {mode} {options|flags}
 
 Adds a local domain and restarts apache.
 
@@ -16,10 +16,13 @@ Available options:
   -m, --server-admin : Server admin's email address.
   -f, --cert-file    : Certificate file location.
   -k, --cert-key     : Certificate key location.
-  -p, --purge        : Purges root directory of a domain.
-  -s, --ssl          : Enable SSL.
-  -v, --verbose      : Explain what is being done.
   -l, --list         : Lists all available domains.
   -h, --help         : Display this help and exit.
       --install      : Install required dependencies automatically.
       --version      : Output version information and exit.
+
+Available flags:
+
+  -p, --purge        : Purges root directory of a domain.
+  -s, --ssl          : Enable SSL.
+  -v, --verbose      : Explain what is being done.
