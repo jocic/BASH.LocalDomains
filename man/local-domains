@@ -1,0 +1,17 @@
+.\" Manpage for local-domains.
+.\" Contact office@djordjejocic.com to correct errors or typos.
+.TH LOCAL-DOMAINS "1" "23 Nov 2018" "1.1.3" "General Commands Manual"
+.SH NAME
+local-domains \- manages domains on Debian and Debian-based distributions.
+.SH SYNOPSIS
+local-domains [mode] [options]
+.SH DESCRIPTION
+Local Domains is a simple BASH script for creating local domains on Debian and Debian-based distributions.
+.SH SEE ALSO
+Full documentation is also available at: <http://www.github.com/jocic/BASH.LocalDomains>
+
+apache2(1)
+.SH BUGS
+There are no known bugs.
+.SH AUTHOR
+Đorđe Jocić (office@djordjejocic.com)
