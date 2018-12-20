@@ -4,9 +4,64 @@
 .SH NAME
 local-domains \- manages domains on Debian and Debian-based distributions.
 .SH SYNOPSIS
-local-domains [mode] [options]
+local-domains [mode] [options|flags]
 .SH DESCRIPTION
 Local Domains is a simple BASH script for creating local domains on Debian and Debian-based distributions.
+.SH OPTIONS
+Adds a local domain and restarts apache.
+
+.I Available modes:
+.TP
+\fB -a\fR, \fB-\-add\fR
+Select add mode.
+.TP
+\fB -r\fR, \fB-\-remove\fR
+Select remove mode.
+.TP
+\fB -i\fR, \fB-\-interactive\fR
+.TP
+.I Available options:
+.TP
+\fB -d\fR, \fB-\-domain\fR
+Domain that needs to be added or removed.
+.TP
+\fB -e\fR, \fB-\-ip-address\fR
+IP address that should be assigned to the domains.
+.TP
+\fB -o\fR, \fB-\-root-dir\fR
+Root directory of a domain.
+.TP
+\fB -m\fR, \fB-\-server-admin\fR
+Server admin's email address.
+.TP
+\fB -f\fR, \fB-\-cert-file\fR
+Certificate file location.
+.TP
+\fB -k\fR, \fB-\-cert-key\fR
+Certificate key location.
+.TP
+\fB -l\fR, \fB-\-list\fR
+Lists all available domains.
+.TP
+\fB -h\fR, \fB-\-help\fR
+Display this help and exit.
+.TP
+\fB-\-install\fR
+Install required dependencies automatically.
+.TP
+\fB-\-version\fR
+Output version information and exit.
+.TP
+.I Available flags:
+.TP
+\fB -p\fR, \fB-\-purge\fR
+Purges root directory of a domain.
+.TP
+\fB -s\fR, \fB-\-ssl\fR
+Enable SSL.
+.TP
+\fB -v\fR, \fB-\-verbose\fR
+Explain what is being done.
 .SH SEE ALSO
 Full documentation is also available at: <http://www.github.com/jocic/BASH.LocalDomains>
 
