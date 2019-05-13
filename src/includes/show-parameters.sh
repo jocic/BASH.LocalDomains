@@ -35,28 +35,28 @@
 
 if [ $mode = "add" ]; then
     
-    printf "Domain:          %s" "$domain";
-    printf "IP Address:      %s" "$ip_address";
-    printf "Root Dir:        %s" "$root_dir";
-    printf "Server Admin:    %s" "$server_admin";
-    printf "Purge:           %s" "$purge";
-    printf "Mode:            %s" "$mode";
-    printf "Enable SSL:      %s" "$enable_ssl";
+    printf "Domain:          %s\n" "$domain";
+    printf "IP Address:      %s\n" "$ip_address";
+    printf "Root Dir:        %s\n" "$root_dir";
+    printf "Server Admin:    %s\n" "$server_admin";
+    printf "Purge:           %s\n" "$purge";
+    printf "Mode:            %s\n" "$mode";
+    printf "Enable SSL:      %s\n" "$enable_ssl";
     
     if [ $enable_ssl = "yes" ]; then
         
-        printf "Cert. File:      %s" "$cert_file";
-        printf "Cert. Key:       %s" "$cert_key";
+        printf "Cert. File:      %s\n" "$cert_file";
+        printf "Cert. Key:       %s\n" "$cert_key";
         
     fi
     
-    printf "Verbose Mode:    %s" "$verbose_mode";
+    printf "Verbose Mode:    %s\n" "$verbose_mode";
     
 else
     
-    printf "Domain:          %s" "$domain";
-    printf "Purge:           %s" "$purge";
-    printf "Mode:            %s" "$mode";
-    printf "Verbose Mode:    %s" "$verbose_mode";
+    printf "Domain:          %s\n" "$domain";
+    printf "Purge:           %s\n" "$purge";
+    printf "Mode:            %s\n" "$mode";
+    printf "Verbose Mode:    %s\n" "$verbose_mode";
     
 fi
