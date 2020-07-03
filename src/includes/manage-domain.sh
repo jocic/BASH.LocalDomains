@@ -296,25 +296,25 @@ if [ -z $enable_ssl ] && [ $mode = "add" ]; then
     
 fi
 
-############################
-# STEP 7- CERTIFICATE FILE #
-############################
+####################
+# STEP 7- SSL CERT #
+####################
 
 if [ -z $cert_file ] && [ $mode = "add" ] && [ $enable_ssl = "yes" ]; then
     
     # Print Title.
     
-    printf -- "- Please enter a path of your certificate file, or press enter to use the default value?\n";
+    printf -- "- Please enter a path of your SSL certificate file, or press enter to use the default value?\n";
     
     # Process Input.
     
     while [ -z $cert_file ]; do
         
-        read -rp "Certification file (ex. /etc/apache2/ssl/dummy-ssl.crt) - " temp && printf "\n";
+        read -rp "SSL certificate (ex. /etc/apache2/ssl/dummy-cert.pem) - " temp && printf "\n";
         
         if [ -z $temp ]; then
             
-            cert_file="$source_dir/templates/dummy-cert.crt";
+            cert_file="$source_dir/templates/dummy-cert.pem";
             
         elif [ $(is_valid_file $temp; echo $?) -eq 1 ]; then
             
@@ -330,29 +330,29 @@ if [ -z $cert_file ] && [ $mode = "add" ] && [ $enable_ssl = "yes" ]; then
     
 fi
 
-############################
-# STEP 8 - CERTIFICATE KEY #
-############################
+####################
+# STEP 8 - SSL KEY #
+####################
 
-if [ -z $cert_key ] && [ $mode = "add" ] && [ $enable_ssl = "yes" ]; then
+if [ -z $key_file ] && [ $mode = "add" ] && [ $enable_ssl = "yes" ]; then
     
     # Print Title.
     
-    printf -- "- Please enter a path of your certificate key, or press enter to use the default value?\n";
+    printf -- "- Please enter a path of your SSL key file, or press enter to use the default value?\n";
     
     # Process Input.
     
-    while [ -z $cert_key ]; do
+    while [ -z $key_file ]; do
         
-        read -rp "Certification key (ex. /etc/apache2/ssl/dummy-ssl.key) - " temp && printf "\n";
+        read -rp "SSL key (ex. /etc/apache2/ssl/dummy-key.pem) - " temp && printf "\n";
         
         if [ -z $temp ]; then
             
-            cert_key="$source_dir/templates/dummy-cert.key";
+            key_file="$source_dir/templates/dummy-key.pem";
             
         elif [ $(is_valid_file $temp; echo $?) -eq 1 ]; then
             
-            cert_key=$temp;
+            key_file=$temp;
             
         else
             
@@ -364,9 +364,43 @@ if [ -z $cert_key ] && [ $mode = "add" ] && [ $enable_ssl = "yes" ]; then
     
 fi
 
-##################
-# STEP 9 - PURGE #
-##################
+######################
+# STEP 9 - SSL CHAIN #
+######################
+
+if [ -z $chain_file ] && [ $mode = "add" ] && [ $enable_ssl = "yes" ]; then
+    
+    # Print Title.
+    
+    printf -- "- Please enter a path of your SSL chain file, or press enter to use the default value?\n";
+    
+    # Process Input.
+    
+    while [ -z $chain_file ]; do
+        
+        read -rp "SSL chain (ex. /etc/apache2/ssl/dummy-chain.pem) - " temp && printf "\n";
+        
+        if [ -z $temp ]; then
+            
+            chain_file="$source_dir/templates/dummy-chain.pem";
+            
+        elif [ $(is_valid_file $temp; echo $?) -eq 1 ]; then
+            
+            chain_file=$temp;
+            
+        else
+            
+            printf "Invalid ceritfication key provided. It doesn't exist.\n";
+            
+        fi
+        
+    done;
+    
+fi
+
+###################
+# STEP 10 - PURGE #
+###################
 
 if [ -z $purge ]; then
     
@@ -401,7 +435,7 @@ if [ -z $purge ]; then
 fi
 
 ##########################
-# STEP 10 - VERBOSE MODE #
+# STEP 11 - VERBOSE MODE #
 ##########################
 
 if [ -z $verbose_mode ]; then

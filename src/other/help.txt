@@ -14,8 +14,9 @@ Available options:
   -e, --ip-address   : IP address that should be assigned to the domains.
   -o, --root-dir     : Root directory of a domain.
   -m, --server-admin : Server admin's email address.
-  -f, --cert-file    : Certificate file location.
-  -k, --cert-key     : Certificate key location.
+  -c, --cert-file    : SSL certificate file location.
+  -k, --key-file     : SSL certificate key location.
+  -C, --chain-file   : SSL certificate chain location.
   -l, --list         : Lists all available domains.
   -h, --help         : Display this help and exit.
       --install      : Install required dependencies automatically.

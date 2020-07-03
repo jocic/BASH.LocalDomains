@@ -53,7 +53,7 @@ ip_address="";
 mode="";
 root_dir="";
 cert_file="";
-cert_key="";
+key_file="";
 server_admin="";
 enable_ssl="";
 purge="";
@@ -153,9 +153,11 @@ else
             
             [ -z "$enable_ssl" ] && enable_ssl="no";
             
-            [ -z "$cert_file" ] && cert_file="$source_dir/templates/dummy-cert.crt";
+            [ -z "$cert_file" ] && cert_file="$source_dir/templates/dummy-cert.pem";
             
-            [ -z "$cert_key" ] && cert_key="$source_dir/templates/dummy-cert.key";
+            [ -z "$key_file" ] && key_file="$source_dir/templates/dummy-cert.pem";
+            
+            [ -z "$chain_file" ] && key_file="$source_dir/templates/dummy-chain.pem";
             
             [ -z "$purge" ] && purge="no";
             
@@ -205,7 +207,7 @@ else
             
             # Key.
             
-            if [ $(is_valid_file "$cert_key"; echo $?) -eq 0 ]; then
+            if [ $(is_valid_file "$key_file"; echo $?) -eq 0 ]; then
                 printf "Error: Invalid ceritfication key provided. It doesn't exist.\n" && exit;
             fi
             

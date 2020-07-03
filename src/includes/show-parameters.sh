@@ -45,8 +45,9 @@ if [ $mode = "add" ]; then
     
     if [ $enable_ssl = "yes" ]; then
         
-        printf "Cert. File:      %s\n" "$cert_file";
-        printf "Cert. Key:       %s\n" "$cert_key";
+        printf "SSL Cert:        %s\n" "$cert_file";
+        printf "SSL Key:         %s\n" "$key_file";
+        printf "SSL Chain:       %s\n" "$chain_file";
         
     fi
     

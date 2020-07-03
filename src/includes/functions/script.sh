@@ -109,7 +109,9 @@ process_arguments()
         
         [ "$queue" = "cert-file" ] && cert_file=$arg;
         
-        [ "$queue" = "cert-key" ] && cert_key=$arg;
+        [ "$queue" = "key-file" ] && key_file=$arg;
+        
+        [ "$queue" = "chain-file" ] && chain_file=$arg;
         
         # Reset Queue Value
         
@@ -125,9 +127,11 @@ process_arguments()
         
         [ "$arg" = "-sa" ] || [ "$arg" = "-m" ] || [ "$arg" = "--server-admin" ] && queue="server-admin";
         
-        [ "$arg" = "-cf" ] || [ "$arg" = "-f" ] || [ "$arg" = "--cert-file" ] && queue="cert-file";
+        [ "$arg" = "-cf" ] || [ "$arg" = "-c" ] || [ "$arg" = "--cert-file" ] && queue="cert-file";
         
-        [ "$arg" = "-ck" ] || [ "$arg" = "-k" ] || [ "$arg" = "--cert-key" ] && queue="cert-key";
+        [ "$arg" = "-kf" ] || [ "$arg" = "-k" ] || [ "$arg" = "--key-file" ] && queue="key-file";
+        
+        [ "$arg" = "-cf" ] || [ "$arg" = "-C" ] || [ "$arg" = "--chain-file" ] && queue="chain-file";
         
         [ "$arg" = "-a" ] || [ "$arg" = "--add" ] && mode="add";
         

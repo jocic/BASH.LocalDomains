@@ -44,8 +44,9 @@ filename_prefix="";
 domain_pattern="{{ domain }}";
 root_dir_pattern="{{ root_dir }}";
 server_admin_pattern="{{ server_admin }}";
-cert_file_pattern="{{ cert_file }}";
-cert_key_pattern="{{ cert_key }}";
+ssl_cert_pattern="{{ cert_file }}";
+ssl_key_pattern="{{ key_file }}";
+ssl_chain_pattern="{{ chain_file }}";
 filename_prefix_pattern="[^a-zA-Z0-9]"; # For Some Reason [A-z] Does Not Work
 
 ###################
@@ -91,8 +92,9 @@ fi
 apache_config="${apache_config//$domain_pattern/$domain}";
 apache_config="${apache_config//$root_dir_pattern/$root_dir}";
 apache_config="${apache_config//$server_admin_pattern/$server_admin}";
-apache_config="${apache_config//$cert_file_pattern/\/etc\/apache2\/ssl\/$filename_prefix.crt}";
-apache_config="${apache_config//$cert_key_pattern/\/etc\/apache2\/ssl\/$filename_prefix.key}";
+apache_config="${apache_config//$ssl_cert_pattern/\/etc\/ssl\/certs\/$filename_prefix.pem}";
+apache_config="${apache_config//$ssl_key_pattern/\/etc\/ssl\/private\/$filename_prefix.pem}";
+apache_config="${apache_config//$ssl_chain_pattern/\/etc\/ssl\/chains\/$filename_prefix.pem}";
 
 ####################################
 # STEP 4 - ADD CONFIGURATION FILES #
@@ -113,8 +115,8 @@ if [ $verbose_mode = "yes" ]; then
     printf -- "- Creating SSL directory (if it doesn't exist)...\n";
 fi
 
-if [ ! -d "/etc/apache2/ssl" ]; then
-  mkdir -p -m 700 "/etc/apache2/ssl";
+if [ ! -d "/etc/ssl/chains" ]; then
+  mkdir -p -m 700 "/etc/ssl/chains";
 fi
 
 ##################################
@@ -125,9 +127,11 @@ if [ $verbose_mode = "yes" ]; then
     printf -- "- Adding dummy SSL certificates...\n";
 fi
 
-cp $cert_file "/etc/apache2/ssl/$filename_prefix.crt";
+cp "$cert_file" "/etc/ssl/certs/$filename_prefix.pem";
 
-cp $cert_key "/etc/apache2/ssl/$filename_prefix.key";
+cp "$key_file" "/etc/ssl/private/$filename_prefix.pem";
+
+cp "$chain_file" "/etc/ssl/chains/$filename_prefix.pem";
 
 ##################################
 # STEP 7 - CREATE ROOT DIRECTORY #
