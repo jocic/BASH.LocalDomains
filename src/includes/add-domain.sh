@@ -103,7 +103,7 @@ if [ $verbose_mode = "yes" ]; then
 fi
 
 echo "$apache_config" > "/etc/apache2/sites-available/$filename_prefix.conf";
-echo "$apache_config" > "/etc/apache2/sites-enabled/$filename_prefix.conf";
+ln -sr "/etc/apache2/sites-available/$filename_prefix.conf" "/etc/apache2/sites-enabled/$filename_prefix.conf";
 
 ######################################
 # STEP 5 - CREATE CERTIFICATE FOLDER #
